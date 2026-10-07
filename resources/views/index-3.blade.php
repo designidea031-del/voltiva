@@ -557,29 +557,9 @@
 
         <!-- start: Product Carousel Section -->
         <!-- start: Voltiva Prime Modular Flat Plate Showcase Section (Full Width) -->
-        <!-- start: Voltiva Prime Modular Flat Plate Showcase Section (Proper Multi-Element Design) -->
+        <!-- start: Voltiva Prime Modular Flat Plate Showcase Section (Clean Luxury Professional Design) -->
         <section class="tj-prime-showcase-section">
           <div class="prime-stage-canvas">
-
-            <!-- Background Architectural Grid & Grey Tone Panel -->
-            <div class="prime-bg-grid" aria-hidden="true">
-              <div class="prime-bg-panel-grey"></div>
-              <div class="prime-bg-center-line"></div>
-            </div>
-
-            <!-- Top-Right Official Brand Logo -->
-            <div class="prime-corner-brand prime-brand-top">
-              <img src="{{ asset('assets/images/product/prime-voltiva-logo-hd.png') }}" 
-                   alt="Voltiva - Powering Your Ambition" 
-                   loading="lazy" />
-            </div>
-
-            <!-- Bottom-Left Official Prime Series Badge -->
-            <div class="prime-corner-brand prime-brand-bottom">
-              <img src="{{ asset('assets/images/product/prime-badge-logo-hd.png') }}" 
-                   alt="PRIME modular flat plate" 
-                   loading="lazy" />
-            </div>
 
             <!-- Layer 1: Background Monumental Typography (Directly UNDER Switchboard) -->
             <div class="prime-bg-text-layer" aria-hidden="true">
@@ -588,7 +568,7 @@
               <span class="p-line p-line-3">PLATE</span>
             </div>
 
-            <!-- Layer 2: Center 3D Floating Switchboard Plate (Overlapping the Typography) -->
+            <!-- Layer 2: Center 3D Floating Switchboard Plate (Slightly Smaller & Elegantly Centered) -->
             <div class="prime-switch-layer">
               <a href="{{ route('product') }}" class="prime-switch-link" title="Explore Voltiva Prime Modular Flat Plate Collection">
                 <img src="{{ asset('assets/images/product/prime-modular-plate-isolated.png') }}" 
@@ -619,7 +599,7 @@
               width: 100%;
               background: #ffffff;
               overflow: hidden;
-              padding: 0;
+              padding: clamp(20px, 4vw, 50px) 0;
               margin: 0;
               box-sizing: border-box;
               display: flex;
@@ -628,105 +608,46 @@
               user-select: none;
             }
 
-            /* Proportional Stage Canvas locked to exact 1786 / 1258 geometric aspect ratio */
+            /* Proportional Stage Canvas locked to exact luxury wide proportion */
             .prime-stage-canvas {
               position: relative;
               width: 100%;
-              max-width: 1600px;
-              aspect-ratio: 1786 / 1258;
+              max-width: 1520px;
+              aspect-ratio: 16 / 10;
               margin: 0 auto;
               overflow: hidden;
               background: #ffffff;
               container-type: inline-size;
             }
 
-            /* Background Grid, Architectural Fold Line & Lower Grey Surface */
-            .prime-bg-grid {
-              position: absolute;
-              inset: 0;
-              z-index: 1;
-              pointer-events: none;
-            }
-            .prime-bg-panel-grey {
-              position: absolute;
-              left: 0;
-              top: 47.85%;
-              width: 57%;
-              bottom: 0;
-              background: #e6e6e7;
-            }
-            .prime-bg-center-line {
-              position: absolute;
-              left: 50%;
-              top: 0;
-              bottom: 0;
-              width: 1px;
-              background: rgba(0, 0, 0, 0.08);
-            }
-
-            /* Corner Brand Logos */
-            .prime-corner-brand {
-              position: absolute;
-              z-index: 7;
-              pointer-events: none;
-              user-select: none;
-            }
-            .prime-brand-top {
-              top: 2.7%;
-              right: 2.4%;
-              width: 12.15cqi;
-              max-width: 220px;
-            }
-            .prime-brand-top img {
-              width: 100%;
-              height: auto;
-              display: block;
-            }
-            .prime-brand-bottom {
-              bottom: 2.8%;
-              left: 2.1%;
-              width: 9.24cqi;
-              max-width: 170px;
-            }
-            .prime-brand-bottom img {
-              width: 100%;
-              height: auto;
-              display: block;
-            }
-
             /* Layer 1: Massive Architectural Typography (Sits UNDER the Switchboard) */
             .prime-bg-text-layer {
               position: absolute;
-              top: 4.77%;
-              left: 5.15%;
+              top: 5.5%;
+              left: 4.5%;
               z-index: 2;
               display: flex;
               flex-direction: column;
               line-height: 0.88;
               font-family: 'Montserrat', sans-serif;
               font-weight: 900;
-              font-size: clamp(38px, 9.75cqi, 156px);
+              font-size: clamp(34px, 8.8cqi, 138px);
               letter-spacing: -0.015em;
               pointer-events: none;
               user-select: none;
             }
-            .prime-bg-text-layer .p-line-1,
-            .prime-bg-text-layer .p-line-2 {
-              color: #e6e6e7;
+            .prime-bg-text-layer .p-line {
+              color: #e4e7ee;
               display: block;
-            }
-            .prime-bg-text-layer .p-line-3 {
-              color: #ffffff;
-              -webkit-text-stroke: clamp(1px, 0.12cqi, 2.5px) #e6e6e7;
-              display: block;
+              text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
             }
 
-            /* Layer 2: Center 3D Floating Switchboard Plate (Overlaps Text Layer) */
+            /* Layer 2: Center 3D Floating Switchboard Plate (Reduced Size & Harmonious Overlap) */
             .prime-switch-layer {
               position: absolute;
-              top: 10.89%;
-              left: 7.33%;
-              width: 85.33%;
+              top: 13.5%;
+              left: 15%;
+              width: 71%;
               z-index: 5;
               text-align: center;
             }
@@ -741,19 +662,19 @@
               width: 100%;
               height: auto;
               display: block;
-              filter: drop-shadow(0 25px 42px rgba(0, 0, 0, 0.20)) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.12));
+              filter: drop-shadow(0 20px 38px rgba(0, 0, 0, 0.16)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.10));
               transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
             }
             .prime-switch-link:hover .prime-switch-img {
               transform: translateY(-5px) scale(1.012);
-              filter: drop-shadow(0 32px 52px rgba(0, 0, 0, 0.26)) drop-shadow(0 14px 22px rgba(0, 0, 0, 0.16));
+              filter: drop-shadow(0 28px 48px rgba(0, 0, 0, 0.22)) drop-shadow(0 12px 20px rgba(0, 0, 0, 0.14));
             }
 
             /* Layer 3: Bottom-Right Statement with Script and Cyan Bar */
             .prime-bottom-statement {
               position: absolute;
-              right: 2.52%;
-              bottom: 8.5%;
+              right: 4.2%;
+              bottom: 6.8%;
               z-index: 6;
               text-align: right;
               display: flex;
@@ -764,11 +685,11 @@
             }
             .prime-script-text {
               font-family: 'Caveat', cursive;
-              font-size: clamp(22px, 4.8cqi, 76px);
+              font-size: clamp(22px, 4.2cqi, 66px);
               font-weight: 600;
-              color: #70757d;
+              color: #64748b;
               line-height: 1;
-              margin-bottom: -0.4cqi;
+              margin-bottom: -0.3cqi;
               margin-right: 0.3cqi;
               transform: rotate(-1.5deg);
             }
@@ -778,9 +699,9 @@
               gap: 0.25em;
               font-family: 'Montserrat', 'Outfit', sans-serif;
               font-weight: 900;
-              font-size: clamp(28px, 6.2cqi, 98px);
+              font-size: clamp(26px, 5.6cqi, 88px);
               letter-spacing: 0.02em;
-              color: #c8cfdb;
+              color: #c4ccda;
               line-height: 0.92;
             }
             .word-design {
@@ -789,18 +710,42 @@
             }
             .prime-cyan-accent {
               position: absolute;
-              bottom: -0.55cqi;
+              bottom: -0.5cqi;
               left: 0;
               width: 100%;
-              height: clamp(3px, 0.42cqi, 6px);
-              background: #42bcc8;
+              height: clamp(3px, 0.38cqi, 5.5px);
+              background: #00b4d8;
               border-radius: 4px;
             }
 
-            /* Mobile and Tablet fallback safety */
+            /* Mobile and Tablet optimization */
+            @media (max-width: 991px) {
+              .prime-stage-canvas {
+                aspect-ratio: 16 / 11;
+              }
+              .prime-switch-layer {
+                width: 74%;
+                left: 13.5%;
+                top: 14%;
+              }
+            }
             @media (max-width: 767px) {
               .prime-stage-canvas {
-                aspect-ratio: 1786 / 1258;
+                aspect-ratio: 16 / 12;
+              }
+              .prime-switch-layer {
+                width: 80%;
+                left: 10%;
+                top: 15%;
+              }
+              .prime-bg-text-layer {
+                top: 4%;
+                left: 3.5%;
+                font-size: clamp(28px, 9cqi, 60px);
+              }
+              .prime-bottom-statement {
+                right: 3.5%;
+                bottom: 4.5%;
               }
             }
           </style>
