@@ -557,190 +557,61 @@
 
         <!-- start: Product Carousel Section -->
         <!-- start: Voltiva Prime Modular Flat Plate Showcase Section (Full Width) -->
-        <!-- start: Voltiva Prime Modular Flat Plate Showcase Section (Proper Layered Design) -->
+        <!-- start: Voltiva Prime Modular Flat Plate Showcase Section (Image 2 Exact Design) -->
         <section class="tj-prime-showcase-section">
-
-          <div class="prime-stage-canvas">
-
-            <!-- Layer 1: Background Architectural Typography (Directly Under Switch Plate) -->
-            <div class="prime-bg-text-top">
-              <span class="p-line-1">PREMIUM</span>
-              <span class="p-line-2">MODULAR</span>
-              <span class="p-line-3">PLATE</span>
-            </div>
-
-            <!-- Layer 2: Center 3D Floating Switchboard Plate (Overlapping the Typography) -->
-            <div class="prime-switch-stage">
-              <a href="{{ route('product') }}" class="prime-product-link" title="Explore Voltiva Prime Modular Flat Plate Collection">
-                <img src="{{ asset('assets/images/product/prime-modular-plate-isolated.png') }}" 
-                     alt="Voltiva Prime Modular Flat Plate" 
-                     class="prime-switch-img" />
-              </a>
-            </div>
-
-            <!-- Layer 3: Bottom-Right Typography & Cyan Underline Bar -->
-            <div class="prime-bottom-statement">
-              <span class="prime-script-text">seamless fit</span>
-              <div class="prime-statement-title">
-                <span>SLEEK DESIGN</span>
-                <span class="prime-accent-bar"></span>
-              </div>
-            </div>
-
+          <div class="prime-showcase-container">
+            <a href="{{ route('product') }}" class="prime-showcase-link" title="Explore Voltiva Prime Modular Flat Plate Collection">
+              <picture>
+                <source srcset="{{ asset('assets/images/banner/voltiva-prime-modular-plate-hd.webp') }}" type="image/webp">
+                <img src="{{ asset('assets/images/banner/voltiva-prime-modular-plate-hd.png') }}" 
+                     alt="Voltiva Prime Modular Flat Plate - Seamless Fit, Sleek Design" 
+                     class="prime-showcase-image" 
+                     loading="lazy" 
+                     width="1786" 
+                     height="1258" />
+              </picture>
+            </a>
           </div>
 
           <style>
-            @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@800;900&family=Montserrat:wght@900&display=swap');
-
             .tj-prime-showcase-section {
               position: relative;
               width: 100%;
-              background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 42%, #E6EAF0 100%);
+              background: #ffffff;
               overflow: hidden;
-              user-select: none;
-              display: flex;
-              align-items: center;
-              justify-content: center;
               padding: 0;
               margin: 0;
-              box-sizing: border-box;
+              line-height: 0;
             }
-
-            /* Unified Proportional Stage Canvas - locks text and switch plate in exact geometric relationship */
-            .prime-stage-canvas {
+            .prime-showcase-container {
               position: relative;
               width: 100%;
-              max-width: 1550px;
-              aspect-ratio: 895 / 631;
-              min-height: clamp(420px, 58vw, 920px);
+              max-width: 1600px;
               margin: 0 auto;
+              overflow: hidden;
             }
-
-            /* Layer 1: Background Architectural Text (Directly Under Switch Plate with Precise Line Gap) */
-            .prime-bg-text-top {
-              position: absolute;
-              top: 7.1%;
-              left: 5.25%;
-              z-index: 1;
-              display: flex;
-              flex-direction: column;
-              gap: clamp(8px, 1.85vw, 26px);
-              line-height: 0.88;
-              font-family: 'Montserrat', 'Outfit', sans-serif;
-              font-weight: 900;
-              font-size: clamp(36px, 5.6vw, 84px);
-              letter-spacing: -0.015em;
-              color: #e2e6ec;
-              text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
-              pointer-events: none;
-              user-select: none;
-            }
-
-            /* Layer 2: Center Stage with Isolated 3D Switch Plate (Exact Overlap over Typography) */
-            .prime-switch-stage {
-              position: absolute;
-              top: 10.8%;
-              left: -2.7%;
-              width: 96.5%;
-              z-index: 5;
-              text-align: center;
-            }
-            .prime-product-link {
-              display: inline-block;
+            .prime-showcase-link {
+              display: block;
               position: relative;
               width: 100%;
-              text-decoration: none;
               cursor: pointer;
+              text-decoration: none;
+              line-height: 0;
             }
-            .prime-switch-img {
+            .prime-showcase-image {
               width: 100%;
               height: auto;
               display: block;
-              filter: drop-shadow(0 25px 42px rgba(0, 0, 0, 0.22)) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.14));
-              transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+              aspect-ratio: 1786 / 1258;
+              object-fit: cover;
+              transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
             }
-            .prime-switch-stage:hover .prime-switch-img {
-              transform: translateY(-6px) scale(1.015);
-              filter: drop-shadow(0 35px 50px rgba(0, 0, 0, 0.28)) drop-shadow(0 14px 22px rgba(0, 0, 0, 0.18));
-            }
-
-            /* Layer 3: Bottom-Right Statement */
-            .prime-bottom-statement {
-              position: absolute;
-              bottom: 5.5%;
-              right: 5%;
-              z-index: 6;
-              text-align: right;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-end;
-            }
-            .prime-script-text {
-              font-family: 'Caveat', cursive;
-              font-size: clamp(24px, 3.4vw, 52px);
-              font-weight: 700;
-              color: #727a87;
-              line-height: 1;
-              margin-bottom: 2px;
-              transform: rotate(-2deg);
-            }
-            .prime-statement-title {
-              display: flex;
-              flex-direction: column;
-              align-items: flex-end;
-            }
-            .prime-statement-title span:first-child {
-              font-family: 'Outfit', 'Montserrat', sans-serif;
-              font-weight: 900;
-              font-size: clamp(26px, 4.6vw, 70px);
-              letter-spacing: 0.04em;
-              color: #c0c6d0;
-              line-height: 0.95;
-            }
-            .prime-accent-bar {
-              display: block;
-              width: clamp(70px, 9.5vw, 140px);
-              height: clamp(3px, 0.42vw, 6px);
-              background: #00b4d8;
-              border-radius: 3px;
-              margin-top: 8px;
-            }
-
-            /* Responsive Adjustments for Mobile & Tablets */
-            @media (max-width: 991px) {
-              .prime-stage-canvas {
-                aspect-ratio: 895 / 631;
-                min-height: clamp(380px, 58vw, 600px);
-              }
+            .prime-showcase-link:hover .prime-showcase-image {
+              transform: scale(1.012);
             }
             @media (max-width: 767px) {
-              .prime-stage-canvas {
-                aspect-ratio: 895 / 631;
-                min-height: 380px;
-              }
-              .prime-bg-text-top {
-                top: 6.5%;
-                left: 4.5%;
-                gap: clamp(6px, 1.8vw, 16px);
-                font-size: clamp(26px, 6.2vw, 44px);
-              }
-              .prime-switch-stage {
-                top: 10.5%;
-                left: -2.5%;
-                width: 97%;
-              }
-              .prime-bottom-statement {
-                bottom: 4%;
-                right: 4%;
-              }
-            }
-            @media (max-width: 480px) {
-              .prime-stage-canvas {
-                min-height: 320px;
-              }
-              .prime-bg-text-top {
-                font-size: clamp(22px, 6.4vw, 32px);
-                gap: 5px;
+              .prime-showcase-container {
+                max-width: 100%;
               }
             }
           </style>
