@@ -220,14 +220,14 @@ Route::get('/sync-live-catalog', function () {
     \App\Models\SubCategory::truncate();
     \App\Models\Category::truncate();
 
-    // Insert categories
-    foreach ($cats as $cat) {
-        \App\Models\Category::create($cat);
+    // Insert categories in chunks
+    foreach (array_chunk($cats, 50) as $chunk) {
+        \Illuminate\Support\Facades\DB::table('categories')->insert($chunk);
     }
 
-    // Insert subcategories
-    foreach ($subcats as $sub) {
-        \App\Models\SubCategory::create($sub);
+    // Insert subcategories in chunks
+    foreach (array_chunk($subcats, 50) as $chunk) {
+        \Illuminate\Support\Facades\DB::table('sub_categories')->insert($chunk);
     }
 
     // Insert products in chunks
@@ -287,6 +287,12 @@ Route::get('/sync-live-catalog', function () {
         </div>
     </body>
     </html>');
+})->withoutMiddleware([
+    \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+]);
+
 Route::get('/git-pull', function () {
     $results = [];
     $commands = [
