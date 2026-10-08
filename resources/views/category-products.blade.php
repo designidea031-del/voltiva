@@ -478,6 +478,9 @@
                                    padding: 8px 14px;
                                    border-radius: 8px;
                                    text-decoration: none;
+                                   border: none;
+                                   cursor: pointer;
+                                   outline: none;
                                    transition: all 0.25s ease;
                                    white-space: nowrap;
                                 }
@@ -491,6 +494,68 @@
                                 }
                                 .accura-btn-enquire:hover i {
                                    transform: translateX(3px);
+                                }
+
+                                /* Voltiva Product Enquiry Modal Styling */
+                                                                /* Product Modal High Z-Index & Backdrop Fix */
+                                #productEnquiryModal {
+                                   z-index: 100005 !important;
+                                }
+                                .modal-backdrop {
+                                   z-index: 100000 !important;
+                                }
+                                .modal-backdrop.show {
+                                   opacity: 0.65 !important;
+                                }
+
+                                .voltiva-enquiry-modal-content {
+                                   border-radius: 20px !important;
+                                   border: 1px solid rgba(0, 0, 0, 0.08) !important;
+                                   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35) !important;
+                                   overflow: hidden !important;
+                                }
+                                .voltiva-enquiry-header {
+                                   background: #f8fafc;
+                                   border-bottom: 1px solid #edf2f7;
+                                   padding: 1.25rem 1.75rem;
+                                }
+                                .voltiva-modal-icon-badge {
+                                   width: 42px;
+                                   height: 42px;
+                                   border-radius: 12px;
+                                   background: rgba(30, 138, 138, 0.12);
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: center;
+                                   color: #1e8a8a;
+                                   font-size: 1.15rem;
+                                }
+                                .voltiva-modal-product-summary {
+                                   background: #f8fafc;
+                                   border: 1px solid #edf2f7;
+                                   border-radius: 14px;
+                                   padding: 16px;
+                                }
+                                .modal-product-img-wrap {
+                                   width: 82px;
+                                   height: 82px;
+                                   border-radius: 12px;
+                                   background: #ffffff;
+                                   border: 1px solid #e2e8f0;
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: center;
+                                   padding: 6px;
+                                   overflow: hidden;
+                                }
+                                .modal-product-img-wrap img {
+                                   max-width: 100%;
+                                   max-height: 100%;
+                                   object-fit: contain;
+                                }
+                                .voltiva-enquiry-modal-content .form-control:focus {
+                                   border-color: #1e8a8a;
+                                   box-shadow: 0 0 0 3px rgba(30, 138, 138, 0.15);
                                 }
 
                                 /* Description if present */
@@ -649,10 +714,18 @@
                                                        @endif
                                                    </div>
 
-                                                   <a href="{{ route('contact') }}?product={{ urlencode($product->title . ($product->code ? ' (' . $product->code . ')' : '')) }}" class="accura-btn-enquire">
-                                                       <span>Enquire</span>
-                                                       <i class="fa-solid fa-arrow-right"></i>
-                                                   </a>
+                                                   <button type="button" 
+                                                            class="accura-btn-enquire btn-open-enquiry-modal"
+                                                            data-title="{{ $product->title }}"
+                                                            data-code="{{ $product->code ?? '' }}"
+                                                            data-size="{{ $product->size ?? '' }}"
+                                                            data-pkd="{{ $product->pkd ? $product->pkd . ' Pcs' : '' }}"
+                                                            data-price="{{ is_numeric($product->price) ? '₹' . number_format((float)$product->price, 2) : ($product->price ? '₹' . $product->price : 'On Request') }}"
+                                                            data-image="{{ storage_asset($product->image, 'assets/images/product/product-1.webp') }}"
+                                                            data-series="{{ $category->name }}">
+                                                        <span>Enquire</span>
+                                                        <i class="fa-solid fa-arrow-right"></i>
+                                                    </button>
                                                </div>
                                            </div>
                                        </div>
@@ -755,10 +828,18 @@
                                                         @endif
                                                     </div>
 
-                                                    <a href="{{ route('contact') }}?product={{ urlencode($product->title . ($product->code ? ' (' . $product->code . ')' : '')) }}" class="accura-btn-enquire">
+                                                    <button type="button" 
+                                                            class="accura-btn-enquire btn-open-enquiry-modal"
+                                                            data-title="{{ $product->title }}"
+                                                            data-code="{{ $product->code ?? '' }}"
+                                                            data-size="{{ $product->size ?? '' }}"
+                                                            data-pkd="{{ $product->pkd ? $product->pkd . ' Pcs' : '' }}"
+                                                            data-price="{{ is_numeric($product->price) ? '₹' . number_format((float)$product->price, 2) : ($product->price ? '₹' . $product->price : 'On Request') }}"
+                                                            data-image="{{ storage_asset($product->image, 'assets/images/product/product-1.webp') }}"
+                                                            data-series="{{ $category->name }}">
                                                         <span>Enquire</span>
                                                         <i class="fa-solid fa-arrow-right"></i>
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -816,79 +897,147 @@
 
 
 
-         <!-- start: Product details modal Area -->
-         <div id="tj-product-modal-1" style="display: none;">
-            <div class="single-product woosq-product container">
-               <div class="product row ">
-                  <div class="col-12 col-md-6 thumbnails">
-                     <div class="images tj-quick-details-slider swiper">
-                        <div class="swiper-wrapper">
-                           <div class="swiper-slide">
-                              <div class="thumbnail"><img src="{{ asset('assets/images/product/product-1.webp') }}"
-                                    class="attachment-woosq size-woosq" alt=""></div>
-                           </div>
-                           <div class="swiper-slide">
-                              <div class="thumbnail"><img src="{{ asset('assets/images/product/product-2.webp') }}"
-                                    class="attachment-woosq size-woosq" alt=""></div>
-                           </div>
-                           <div class="swiper-slide">
-                              <div class="thumbnail"><img src="{{ asset('assets/images/product/product-3.webp') }}"
-                                    class="attachment-woosq size-woosq" alt=""></div>
-                           </div>
+                  
+      </div>
+   </div>
+   <!-- start: Dynamic Product Enquiry Modal -->
+         <div class="modal fade" id="productEnquiryModal" tabindex="-1" aria-labelledby="productEnquiryModalLabel" aria-hidden="true" style="z-index: 99999;">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+               <div class="modal-content voltiva-enquiry-modal-content">
+                  
+                  <!-- Modal Header -->
+                  <div class="modal-header voltiva-enquiry-header">
+                     <div class="d-flex align-items-center gap-3">
+                        <div class="voltiva-modal-icon-badge">
+                           <i class="fa-solid fa-file-lines"></i>
                         </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-pagination"></div>
+                        <div>
+                           <h5 class="modal-title mb-0 fw-bold text-dark" id="productEnquiryModalLabel">Product Inquiry</h5>
+                           <small class="text-muted">Direct factory quotation & technical specifications</small>
+                        </div>
                      </div>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="col-12 col-md-6 summary entry-summary">
 
-                     <div class="summary-content ps-container ps-theme-wpc">
-                        <div class="product-stock">
-                           <span class="stock in-stock">10 in stock</span>
-                        </div>
-                        <h3 class="tj-product-details-title">Personal holding earbud</h3>
-
-                        <div class="product-details__short-description">
-                           <p>Experience true wireless freedom with our latest earbuds, designed to deliver
-                              crystal-clear
-                              sound and deep bass in compact, lightweight package. Perfectly crafted for everyday use,
-                              these
-                              earbuds feature.</p>
-                        </div>
-                        <div class="tj-product-details-action-wrapper">
-                            <a href="{{ route('contact') }}" class="tj-product-details-buy-now-btn w-100">
-                               <span class="btn-icon"><i class="fal fa-envelope"></i></span>
-                               <span class="btn-text" style="margin-left: 8px;"><span>Inquire Now</span></span>
-                            </a>
-                        </div>
-                        <div class="tj-product-details-query-item d-flex align-items-center">
-                           <span>SKU:</span>
-                           <p>SV-18</p>
-                        </div>
-                        <div class="tj-product-details-query-item d-flex align-items-center">
-                           <span>Category: </span> <a href="{{ route('product') }}"
-                              rel="tag">Modular Accessories</a>
-                        </div>
-                        <div class="tj-product-details-query-item d-flex align-items-center">
-                           <span>Tag:</span> <a href="{{ route('product') }}"
-                              rel="tag">Electrical Solutions</a>
-                        </div>
-                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
-                           <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                        </div>
-                        <div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;">
-                           <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                  <div class="modal-body p-4">
+                     
+                     <!-- Product Quick Summary Card -->
+                     <div class="voltiva-modal-product-summary mb-4">
+                        <div class="row align-items-center g-3">
+                           <div class="col-auto">
+                              <div class="modal-product-img-wrap">
+                                 <img id="enquiryModalProductImg" src="" alt="Product Image" loading="lazy">
+                              </div>
+                           </div>
+                           <div class="col">
+                              <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                 <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 font-monospace" id="enquiryModalProductCode"># ----</span>
+                                 <span class="badge bg-light text-dark border px-2 py-1" id="enquiryModalProductSize">--</span>
+                                 <span class="badge bg-light text-secondary border px-2 py-1" id="enquiryModalProductSeries">Series</span>
+                              </div>
+                              <h4 class="fw-bold mb-1 text-dark" id="enquiryModalProductTitle" style="font-size: 1.15rem;"></h4>
+                              <div class="d-flex align-items-center gap-3">
+                                 <span class="fw-bold text-success fs-5" id="enquiryModalProductPrice">₹0.00</span>
+                                 <span class="text-muted small" id="enquiryModalProductPkd"></span>
+                              </div>
+                           </div>
                         </div>
                      </div>
+
+                     <!-- Success Message Container (Hidden by default) -->
+                     <div id="enquirySuccessBox" class="text-center py-4" style="display: none;">
+                        <div class="mb-3">
+                           <i class="fa-solid fa-circle-check text-success" style="font-size: 4rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Inquiry Submitted Successfully!</h4>
+                        <p class="text-muted mb-4 mx-auto" style="max-width: 480px;" id="enquirySuccessText">
+                           Thank you! Your inquiry has been sent to our sales & engineering team. We will contact you with pricing and details shortly.
+                        </p>
+                        <div class="d-flex justify-content-center gap-2">
+                           <button type="button" class="btn btn-dark px-4 py-2 rounded-pill" data-bs-dismiss="modal">Close Window</button>
+                           <a id="enquirySuccessWhatsAppBtn" href="#" target="_blank" class="btn btn-success px-4 py-2 rounded-pill">
+                              <i class="fa-brands fa-whatsapp me-1"></i> Open in WhatsApp
+                           </a>
+                        </div>
+                     </div>
+
+                     <!-- Inquiry Form -->
+                     <form id="voltivaProductEnquiryForm" method="POST" action="{{ route('contact.submit') }}">
+                        @csrf
+                        <input type="hidden" name="cfSubject" id="enquiryHiddenSubject" value="">
+                        <input type="hidden" name="product_title" id="enquiryHiddenTitle" value="">
+                        <input type="hidden" name="product_code" id="enquiryHiddenCode" value="">
+                        <input type="hidden" name="source" value="Product Detail Modal">
+
+                        <div id="enquiryErrorAlert" class="alert alert-danger py-2 px-3 small mb-3" style="display: none;"></div>
+
+                        <div class="row g-3">
+                           <!-- Full Name -->
+                           <div class="col-md-6">
+                              <label class="form-label fw-semibold small text-secondary">Your Name <span class="text-danger">*</span></label>
+                              <div class="input-group">
+                                 <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-user"></i></span>
+                                 <input type="text" name="cfName" id="enquiryInputName" class="form-control border-start-0 ps-1" placeholder="Enter your full name" required>
+                              </div>
+                           </div>
+
+                           <!-- Phone Number -->
+                           <div class="col-md-6">
+                              <label class="form-label fw-semibold small text-secondary">Phone Number <span class="text-danger">*</span></label>
+                              <div class="input-group">
+                                 <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-phone"></i></span>
+                                 <input type="tel" name="cfPhone" id="enquiryInputPhone" class="form-control border-start-0 ps-1" placeholder="e.g. +91 98765 43210" required>
+                              </div>
+                           </div>
+
+                           <!-- Email Address -->
+                           <div class="col-md-6">
+                              <label class="form-label fw-semibold small text-secondary">Email Address <span class="text-muted fw-normal">(Optional)</span></label>
+                              <div class="input-group">
+                                 <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
+                                 <input type="email" name="cfEmail" id="enquiryInputEmail" class="form-control border-start-0 ps-1" placeholder="e.g. name@example.com">
+                              </div>
+                           </div>
+
+                           <!-- Quantity Required -->
+                           <div class="col-md-6">
+                              <label class="form-label fw-semibold small text-secondary">Estimated Quantity <span class="text-muted fw-normal">(Optional)</span></label>
+                              <div class="input-group">
+                                 <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-boxes-stacked"></i></span>
+                                 <input type="text" name="quantity" id="enquiryInputQuantity" class="form-control border-start-0 ps-1" placeholder="e.g. 50 Pcs / 1 Box">
+                              </div>
+                           </div>
+
+                           <!-- Message -->
+                           <div class="col-12">
+                              <label class="form-label fw-semibold small text-secondary">Message / Notes <span class="text-danger">*</span></label>
+                              <textarea name="cfMessage" id="enquiryInputMessage" rows="3" class="form-control" placeholder="Specify your requirements or questions..." required></textarea>
+                           </div>
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-4 pt-2 border-top">
+                           <a id="enquiryDirectWhatsAppBtn" href="#" target="_blank" class="btn btn-outline-success d-inline-flex align-items-center gap-2 fw-semibold px-3 py-2 rounded-3">
+                              <i class="fa-brands fa-whatsapp fs-5"></i>
+                              <span>Chat on WhatsApp</span>
+                           </a>
+
+                           <div class="d-flex gap-2">
+                              <button type="button" class="btn btn-light px-3 py-2 rounded-3 border" data-bs-dismiss="modal">Cancel</button>
+                              <button type="submit" id="enquirySubmitBtn" class="btn btn-dark d-inline-flex align-items-center gap-2 fw-semibold px-4 py-2 rounded-3" style="background:#0c1e21; border-color:#0c1e21;">
+                                 <span id="enquirySubmitBtnSpinner" class="spinner-border spinner-border-sm" style="display: none;" role="status"></span>
+                                 <span id="enquirySubmitBtnText">Send Inquiry</span>
+                                 <i class="fa-solid fa-paper-plane" id="enquirySubmitBtnIcon"></i>
+                              </button>
+                           </div>
+                        </div>
+                     </form>
 
                   </div>
                </div>
             </div>
          </div>
-         <!-- end: Product details modal Area -->
-      </div>
-   </div>
+         <!-- end: Dynamic Product Enquiry Modal -->
+
    <!-- JS here -->
    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -907,6 +1056,146 @@
    <script src="{{ asset('assets/js/range-slider.js') }}"></script>
    <script src="{{ asset('assets/js/main.js') }}"></script>
    <x-seo-footer />
+   <!-- Product Enquiry Modal Interactive JavaScript -->
+   <script>
+   document.addEventListener('DOMContentLoaded', function () {
+      const modalEl = document.getElementById('productEnquiryModal');
+      if (!modalEl) return;
+
+      if (modalEl.parentElement !== document.body) { document.body.appendChild(modalEl); }
+      const bsModal = new bootstrap.Modal(modalEl);
+      const form = document.getElementById('voltivaProductEnquiryForm');
+      const successBox = document.getElementById('enquirySuccessBox');
+      const errorAlert = document.getElementById('enquiryErrorAlert');
+      const submitBtn = document.getElementById('enquirySubmitBtn');
+      const submitSpinner = document.getElementById('enquirySubmitBtnSpinner');
+      const submitText = document.getElementById('enquirySubmitBtnText');
+      const submitIcon = document.getElementById('enquirySubmitBtnIcon');
+      const directWaBtn = document.getElementById('enquiryDirectWhatsAppBtn');
+      const successWaBtn = document.getElementById('enquirySuccessWhatsAppBtn');
+
+      const waPhone = '{{ preg_replace("/[^0-9]/", "", $site_settings["contact_whatsapp"] ?? $site_settings["contact_phone"] ?? "917600757008") }}';
+
+      // Click handler for all Enquire buttons
+      document.querySelectorAll('.btn-open-enquiry-modal').forEach(btn => {
+         btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const title = this.dataset.title || '';
+            const code = this.dataset.code || '';
+            const size = this.dataset.size || '';
+            const price = this.dataset.price || '';
+            const image = this.dataset.image || '';
+            const series = this.dataset.series || '';
+            const pkd = this.dataset.pkd || '';
+
+            // Reset modal states
+            form.style.display = 'block';
+            successBox.style.display = 'none';
+            errorAlert.style.display = 'none';
+            errorAlert.textContent = '';
+            submitBtn.disabled = false;
+            submitSpinner.style.display = 'none';
+            submitText.textContent = 'Send Inquiry';
+            submitIcon.style.display = 'inline-block';
+
+            // Populate Product Summary
+            document.getElementById('enquiryModalProductTitle').textContent = title;
+            document.getElementById('enquiryModalProductImg').src = image;
+            document.getElementById('enquiryModalProductImg').alt = title;
+
+            const codeBadge = document.getElementById('enquiryModalProductCode');
+            if (code) {
+               codeBadge.textContent = '#' + code;
+               codeBadge.style.display = 'inline-block';
+            } else {
+               codeBadge.style.display = 'none';
+            }
+
+            const sizeBadge = document.getElementById('enquiryModalProductSize');
+            if (size) {
+               sizeBadge.textContent = size;
+               sizeBadge.style.display = 'inline-block';
+            } else {
+               sizeBadge.style.display = 'none';
+            }
+
+            document.getElementById('enquiryModalProductSeries').textContent = series || 'Voltiva Series';
+            document.getElementById('enquiryModalProductPrice').textContent = price || 'On Request';
+            document.getElementById('enquiryModalProductPkd').textContent = pkd ? 'Pkg: ' + pkd : '';
+
+            // Hidden fields
+            document.getElementById('enquiryHiddenSubject').value = 'Inquiry: ' + title + (code ? ' (' + code + ')' : '');
+            document.getElementById('enquiryHiddenTitle').value = title;
+            document.getElementById('enquiryHiddenCode').value = code;
+
+            // Pre-fill message
+            const defaultMsg = `Hello Voltiva Team,\nI am interested in purchasing ${title}${code ? ' (Code: ' + code + ')' : ''}.\nPlease provide quotation and availability details.`;
+            document.getElementById('enquiryInputMessage').value = defaultMsg;
+
+            // WhatsApp link
+            const waText = encodeURIComponent(`Hello Voltiva, I am interested in: ${title} (Code: ${code}, Series: ${series}). Please share quotation.`);
+            const waUrl = `https://wa.me/${waPhone}?text=${waText}`;
+            if (directWaBtn) directWaBtn.href = waUrl;
+            if (successWaBtn) successWaBtn.href = waUrl;
+
+            bsModal.show();
+         });
+      });
+
+      // Form submit AJAX
+      form.addEventListener('submit', function (e) {
+         e.preventDefault();
+
+         submitBtn.disabled = true;
+         submitSpinner.style.display = 'inline-block';
+         submitText.textContent = 'Sending...';
+         submitIcon.style.display = 'none';
+         errorAlert.style.display = 'none';
+
+         const formData = new FormData(form);
+
+         fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+               'X-Requested-With': 'XMLHttpRequest',
+               'Accept': 'application/json'
+            }
+         })
+         .then(response => {
+            if (!response.ok) {
+               return response.json().then(err => Promise.reject(err));
+            }
+            return response.json();
+         })
+         .then(data => {
+            // Success
+            form.style.display = 'none';
+            successBox.style.display = 'block';
+            const prodTitle = document.getElementById('enquiryHiddenTitle').value;
+            const name = document.getElementById('enquiryInputName').value;
+            document.getElementById('enquirySuccessText').innerHTML = 
+               `Thank you <strong>${name}</strong>! Your inquiry for <strong>${prodTitle}</strong> has been received successfully. Our team will contact you shortly.`;
+         })
+         .catch(err => {
+            submitBtn.disabled = false;
+            submitSpinner.style.display = 'none';
+            submitText.textContent = 'Send Inquiry';
+            submitIcon.style.display = 'inline-block';
+
+            let msg = 'An error occurred while submitting your inquiry. Please try again or chat with us on WhatsApp.';
+            if (err && err.message) msg = err.message;
+            if (err && err.errors) {
+               const firstKey = Object.keys(err.errors)[0];
+               if (firstKey) msg = err.errors[firstKey][0];
+            }
+            errorAlert.textContent = msg;
+            errorAlert.style.display = 'block';
+         });
+      });
+   });
+   </script>
 </body>
 
 </html>
