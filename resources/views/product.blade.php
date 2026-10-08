@@ -229,72 +229,6 @@
          <main id="primary" class="site-main">
             <div class="space-for-header"></div>
             <!-- start: Breadcrumb Section -->
-            <style>
-               .tj-page-header {
-                  width: calc(100% - 30px) !important;
-                  max-width: none !important;
-                  margin-left: 15px !important;
-                  margin-right: 15px !important;
-                  aspect-ratio: 1600 / 533 !important;
-                  height: auto !important;
-                  min-height: unset !important;
-                  max-height: unset !important;
-                  padding-top: 0 !important;
-                  padding-bottom: 0 !important;
-                  padding-left: 0 !important;
-                  padding-right: 0 !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: center !important;
-                  background-position: center center !important;
-                  background-size: cover !important;
-                  background-repeat: no-repeat !important;
-                  border-radius: 14px;
-                  position: relative;
-                  overflow: hidden;
-                  z-index: 2;
-               }
-               @media (max-width: 767px) {
-                  .tj-page-header {
-                     width: calc(100% - 24px) !important;
-                     margin-left: 12px !important;
-                     margin-right: 12px !important;
-                     border-radius: 10px;
-                     min-height: 240px;
-                  }
-               }
-               .tj-page-header > .container {
-                  width: 100% !important;
-                  position: relative;
-                  z-index: 2;
-               }
-               .tj-page-header .tj-page-title {
-                  color: #ffffff !important;
-                  font-size: clamp(18px, 3.2vw, 46px) !important;
-                  font-weight: 700;
-                  line-height: 1.1;
-                  margin-bottom: 0;
-                  text-align: center;
-               }
-               .tj-page-header .tj-page-link {
-                  margin-top: clamp(4px, 1.2vw, 16px) !important;
-                  display: inline-flex;
-                  align-items: center;
-                  justify-content: center;
-                  gap: clamp(4px, 0.8vw, 8px);
-                  background: rgba(255, 255, 255, 0.2);
-                  backdrop-filter: blur(10px);
-                  padding: clamp(2px, 0.6vw, 6px) clamp(8px, 1.5vw, 18px);
-                  border-radius: 50px;
-               }
-               .tj-page-header .tj-page-link span {
-                  color: #ffffff;
-                  font-size: clamp(10px, 1.1vw, 15px) !important;
-               }
-               .tj-page-header .tj-page-link span i {
-                  font-size: clamp(9px, 1vw, 14px) !important;
-               }
-            </style>
             <x-page-banner page="product" defaultTitle="Products" parentTitle="Home" parentRoute="home-2" />
             <!-- end: Breadcrumb Section -->
 
@@ -742,7 +676,7 @@
                         <div class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1">
                            @forelse($categories as $category)
                            @php
-                              $categoryProductsCount = $category->subCategories->sum(fn($sub) => $sub->products->count());
+                              $categoryProductsCount = $category->products->count();
                               $categoryImg = storage_asset($category->image, 'assets/images/product/product-1.webp');
                            @endphp
                            <div class="col">

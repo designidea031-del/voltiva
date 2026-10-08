@@ -231,72 +231,6 @@
 
 
             <!-- start: Breadcrumb Section -->
-            <style>
-               .tj-page-header {
-                  width: calc(100% - 30px) !important;
-                  max-width: none !important;
-                  margin-left: 15px !important;
-                  margin-right: 15px !important;
-                  aspect-ratio: 1600 / 533 !important;
-                  height: auto !important;
-                  min-height: unset !important;
-                  max-height: unset !important;
-                  padding-top: 0 !important;
-                  padding-bottom: 0 !important;
-                  padding-left: 0 !important;
-                  padding-right: 0 !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: center !important;
-                  background-position: center center !important;
-                  background-size: cover !important;
-                  background-repeat: no-repeat !important;
-                  border-radius: 14px;
-                  position: relative;
-                  overflow: hidden;
-                  z-index: 2;
-               }
-               @media (max-width: 767px) {
-                  .tj-page-header {
-                     width: calc(100% - 24px) !important;
-                     margin-left: 12px !important;
-                     margin-right: 12px !important;
-                     border-radius: 10px;
-                     min-height: 240px;
-                  }
-               }
-               .tj-page-header > .container {
-                  width: 100% !important;
-                  position: relative;
-                  z-index: 2;
-               }
-               .tj-page-header .tj-page-title {
-                  color: #ffffff !important;
-                  font-size: clamp(18px, 3.2vw, 46px) !important;
-                  font-weight: 700;
-                  line-height: 1.1;
-                  margin-bottom: 0;
-                  text-align: center;
-               }
-               .tj-page-header .tj-page-link {
-                  margin-top: clamp(4px, 1.2vw, 16px) !important;
-                  display: inline-flex;
-                  align-items: center;
-                  justify-content: center;
-                  gap: clamp(4px, 0.8vw, 8px);
-                  background: rgba(255, 255, 255, 0.2);
-                  backdrop-filter: blur(10px);
-                  padding: clamp(2px, 0.6vw, 6px) clamp(8px, 1.5vw, 18px);
-                  border-radius: 50px;
-               }
-               .tj-page-header .tj-page-link span {
-                  color: #ffffff;
-                  font-size: clamp(10px, 1.1vw, 15px) !important;
-               }
-               .tj-page-header .tj-page-link span i {
-                  font-size: clamp(9px, 1vw, 14px) !important;
-               }
-            </style>
             <x-page-banner page="product" :defaultTitle="$category->name" :currentTitle="$category->name" parentTitle="Home" parentRoute="home-2" subParentTitle="Categories" subParentRoute="product" />
             <!-- end: Breadcrumb Section -->
 
@@ -307,380 +241,539 @@
                      <div class="col-xl-12 col-lg-12 col-md-12">
 
                         <div class="tj-shop-item-wrapper">
-                           
-                            <style>
-                               /* Subcategory Section Header */
-                               .subcategory-header-wrap {
-                                  display: flex;
-                                  align-items: center;
-                                  justify-content: space-between;
-                                  flex-wrap: wrap;
-                                  gap: 12px;
-                                  border-bottom: 2px solid #eef2f5;
-                                  padding-bottom: 14px;
-                                  margin-bottom: 28px;
-                               }
-                               .subcategory-title-corporate {
-                                  color: #0c1e21;
-                                  font-weight: 800;
-                                  font-size: 22px;
-                                  letter-spacing: 0.3px;
-                                  text-transform: uppercase;
-                                  position: relative;
-                                  margin: 0;
-                                  padding-left: 14px;
-                                  border-left: 4px solid var(--tj-color-theme-primary, #1e8a8a);
-                               }
-                               .subcategory-badge-count {
-                                  font-size: 12px;
-                                  font-weight: 600;
-                                  color: #1e8a8a;
-                                  background: rgba(30, 138, 138, 0.08);
-                                  padding: 6px 14px;
-                                  border-radius: 30px;
-                                  border: 1px solid rgba(30, 138, 138, 0.15);
-                               }
+                            
+                             <style>
+                                /* Subcategory Section - Transparent container without outer box */
+                                .subcategory-section {
+                                   margin-bottom: 50px;
+                                   position: relative;
+                                }
 
-                               /* Corporate Product Card */
-                               .accura-product-card {
-                                  background: #ffffff;
-                                  border: 1px solid #e8eeef;
-                                  border-radius: 16px;
-                                  padding: 20px;
-                                  position: relative;
-                                  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-                                  box-shadow: 0 4px 18px -2px rgba(12, 30, 33, 0.04);
-                                  display: flex;
-                                  flex-direction: column;
-                                  height: 100%;
-                                  overflow: hidden;
-                               }
-                               .accura-product-card::before {
-                                  content: '';
-                                  position: absolute;
-                                  top: 0;
-                                  left: 0;
-                                  right: 0;
-                                  height: 3px;
-                                  background: linear-gradient(90deg, #1e8a8a, #43b3b3);
-                                  opacity: 0;
-                                  transition: opacity 0.35s ease;
-                               }
-                               .accura-product-card:hover {
-                                  transform: translateY(-6px);
-                                  border-color: rgba(30, 138, 138, 0.3);
-                                  box-shadow: 0 20px 35px -8px rgba(30, 138, 138, 0.14), 0 8px 16px -4px rgba(12, 30, 33, 0.04);
-                               }
-                               .accura-product-card:hover::before {
-                                  opacity: 1;
-                               }
+                                .subcategory-header-wrap {
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: space-between;
+                                   flex-wrap: wrap;
+                                   gap: 14px;
+                                   border-bottom: 2px solid #eef2f5;
+                                   padding-bottom: 14px;
+                                   margin-bottom: 28px;
+                                }
+                                .subcategory-title-corporate {
+                                   color: #0c1e21;
+                                   font-weight: 800;
+                                   font-size: 22px;
+                                   letter-spacing: 0.3px;
+                                   text-transform: uppercase;
+                                   position: relative;
+                                   margin: 0;
+                                   padding-left: 14px;
+                                   border-left: 4px solid var(--tj-color-theme-primary, #1e8a8a);
+                                   line-height: 1.2;
+                                }
+                                .subcategory-badge-count {
+                                   font-size: 12px;
+                                   font-weight: 700;
+                                   color: #1e8a8a;
+                                   background: rgba(30, 138, 138, 0.08);
+                                   padding: 6px 14px;
+                                   border-radius: 30px;
+                                   border: 1px solid rgba(30, 138, 138, 0.15);
+                                   white-space: nowrap;
+                                }
 
-                               /* Top Card Bar (Code & Size Badges) */
-                               .accura-card-header {
-                                  display: flex;
-                                  align-items: center;
-                                  justify-content: space-between;
-                                  gap: 8px;
-                                  margin-bottom: 12px;
-                               }
-                               .accura-card-badge-code {
-                                  display: inline-flex;
-                                  align-items: center;
-                                  gap: 5px;
-                                  font-size: 11px;
-                                  font-weight: 700;
-                                  color: #1e8a8a;
-                                  background: rgba(30, 138, 138, 0.08);
-                                  padding: 4px 10px;
-                                  border-radius: 6px;
-                                  text-transform: uppercase;
-                                  letter-spacing: 0.5px;
-                                  border: 1px solid rgba(30, 138, 138, 0.12);
-                               }
-                               .accura-card-badge-size {
-                                  display: inline-flex;
-                                  align-items: center;
-                                  gap: 4px;
-                                  font-size: 11px;
-                                  font-weight: 700;
-                                  color: #364e52;
-                                  background: #f1f5f6;
-                                  padding: 4px 10px;
-                                  border-radius: 6px;
-                                  letter-spacing: 0.4px;
-                                  border: 1px solid #e2e8ea;
-                               }
+                                /* Corporate Product Card (Separate individual boxes) */
+                                .accura-product-card {
+                                   background: #ffffff;
+                                   border: 1px solid #e8eeef;
+                                   border-radius: 16px;
+                                   padding: 20px;
+                                   position: relative;
+                                   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                                   box-shadow: 0 4px 18px -2px rgba(12, 30, 33, 0.04);
+                                   display: flex;
+                                   flex-direction: column;
+                                   height: 100%;
+                                   overflow: hidden;
+                                }
+                                .accura-product-card::before {
+                                   content: '';
+                                   position: absolute;
+                                   top: 0;
+                                   left: 0;
+                                   right: 0;
+                                   height: 3px;
+                                   background: linear-gradient(90deg, #1e8a8a, #43b3b3);
+                                   opacity: 0;
+                                   transition: opacity 0.35s ease;
+                                }
+                                .accura-product-card:hover {
+                                   transform: translateY(-6px);
+                                   border-color: rgba(30, 138, 138, 0.3);
+                                   box-shadow: 0 20px 35px -8px rgba(30, 138, 138, 0.14), 0 8px 16px -4px rgba(12, 30, 33, 0.04);
+                                }
+                                .accura-product-card:hover::before {
+                                   opacity: 1;
+                                }
 
-                               /* Card Image Presentation Showcase */
-                               .accura-card-image-box {
-                                  position: relative;
-                                  background: radial-gradient(circle at center, #ffffff 30%, #f4f8f9 100%);
-                                  border: 1px solid #edf2f4;
-                                  border-radius: 12px;
-                                  padding: 18px 12px;
-                                  height: 200px;
-                                  display: flex;
-                                  align-items: center;
-                                  justify-content: center;
-                                  margin-bottom: 16px;
-                                  overflow: hidden;
-                               }
-                               .accura-card-image-box img {
-                                  max-width: 100%;
-                                  max-height: 100%;
-                                  object-fit: contain;
-                                  filter: drop-shadow(0 8px 18px rgba(12, 30, 33, 0.08));
-                                  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-                               }
-                               .accura-product-card:hover .accura-card-image-box img {
-                                  transform: scale(1.06);
-                               }
+                                /* Top Card Bar (Code & Size Badges) */
+                                .accura-card-header {
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: space-between;
+                                   gap: 8px;
+                                   margin-bottom: 12px;
+                                }
+                                .accura-card-badge-code {
+                                   display: inline-flex;
+                                   align-items: center;
+                                   gap: 5px;
+                                   font-size: 11px;
+                                   font-weight: 700;
+                                   color: #1e8a8a;
+                                   background: rgba(30, 138, 138, 0.08);
+                                   padding: 4px 10px;
+                                   border-radius: 6px;
+                                   text-transform: uppercase;
+                                   letter-spacing: 0.5px;
+                                   border: 1px solid rgba(30, 138, 138, 0.12);
+                                }
+                                .accura-card-badge-size {
+                                   display: inline-flex;
+                                   align-items: center;
+                                   gap: 4px;
+                                   font-size: 11px;
+                                   font-weight: 700;
+                                   color: #364e52;
+                                   background: #f1f5f6;
+                                   padding: 4px 10px;
+                                   border-radius: 6px;
+                                   letter-spacing: 0.4px;
+                                   border: 1px solid #e2e8ea;
+                                }
 
-                               /* Product Title */
-                               .accura-product-title {
-                                  color: #0c1e21;
-                                  font-size: 16px;
-                                  font-weight: 700;
-                                  line-height: 1.35;
-                                  margin-bottom: 14px;
-                                  text-transform: uppercase;
-                                  letter-spacing: 0.2px;
-                                  text-align: center;
-                                  display: flex;
-                                  align-items: center;
-                                  justify-content: center;
-                                  min-height: 44px;
-                               }
+                                /* Card Image Presentation Showcase */
+                                .accura-card-image-box {
+                                   position: relative;
+                                   background: radial-gradient(circle at center, #ffffff 30%, #f4f8f9 100%);
+                                   border: 1px solid #edf2f4;
+                                   border-radius: 12px;
+                                   padding: 18px 12px;
+                                   height: 200px;
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: center;
+                                   margin-bottom: 16px;
+                                   overflow: hidden;
+                                }
+                                .accura-card-image-box img {
+                                   max-width: 100%;
+                                   max-height: 100%;
+                                   object-fit: contain;
+                                   filter: drop-shadow(0 8px 18px rgba(12, 30, 33, 0.08));
+                                   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+                                }
+                                .accura-product-card:hover .accura-card-image-box img {
+                                   transform: scale(1.06);
+                                }
 
-                               /* Modern Specs Grid */
-                               .accura-specs-grid {
-                                  display: grid;
-                                  grid-template-columns: repeat(2, 1fr);
-                                  gap: 8px;
-                                  margin-bottom: 16px;
-                               }
-                               .accura-spec-item {
-                                  background: #f8fafb;
-                                  border: 1px solid #edf2f4;
-                                  border-radius: 8px;
-                                  padding: 7px 10px;
-                                  display: flex;
-                                  flex-direction: column;
-                                  gap: 2px;
-                                  transition: background 0.2s ease, border-color 0.2s ease;
-                               }
-                               .accura-product-card:hover .accura-spec-item {
-                                  background: #f4f8f9;
-                                  border-color: #e2ecf0;
-                               }
-                               .accura-spec-label {
-                                  font-size: 10px;
-                                  font-weight: 700;
-                                  color: #839598;
-                                  text-transform: uppercase;
-                                  letter-spacing: 0.5px;
-                                  line-height: 1.2;
-                               }
-                               .accura-spec-value {
-                                  font-size: 13px;
-                                  font-weight: 700;
-                                  color: #111e22;
-                                  line-height: 1.2;
-                               }
+                                /* Product Title */
+                                .accura-product-title {
+                                   color: #0c1e21;
+                                   font-size: 16px;
+                                   font-weight: 700;
+                                   line-height: 1.35;
+                                   margin-bottom: 14px;
+                                   text-transform: uppercase;
+                                   letter-spacing: 0.2px;
+                                   text-align: center;
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: center;
+                                   min-height: 44px;
+                                }
 
-                               /* Card Footer: Price & Action */
-                               .accura-card-footer {
-                                  border-top: 1px dashed #e2e8ea;
-                                  padding-top: 14px;
-                                  margin-top: auto;
-                                  display: flex;
-                                  align-items: center;
-                                  justify-content: space-between;
-                                  gap: 10px;
-                               }
-                               .accura-price-group {
-                                  display: flex;
-                                  flex-direction: column;
-                               }
-                               .accura-price-tagline {
-                                  font-size: 10px;
-                                  font-weight: 700;
-                                  color: #839598;
-                                  text-transform: uppercase;
-                                  letter-spacing: 0.5px;
-                                  line-height: 1;
-                                  margin-bottom: 3px;
-                               }
-                               .accura-price-value {
-                                  font-size: 19px;
-                                  font-weight: 800;
-                                  color: #0c1e21;
-                                  line-height: 1.1;
-                               }
-                               .accura-price-value .currency {
-                                  font-size: 14px;
-                                  font-weight: 700;
-                                  color: #1e8a8a;
-                                  margin-right: 1px;
-                               }
+                                /* Modern Specs Grid */
+                                .accura-specs-grid {
+                                   display: grid;
+                                   grid-template-columns: repeat(2, 1fr);
+                                   gap: 8px;
+                                   margin-bottom: 16px;
+                                }
+                                .accura-spec-item {
+                                   background: #f8fafb;
+                                   border: 1px solid #edf2f4;
+                                   border-radius: 8px;
+                                   padding: 7px 10px;
+                                   display: flex;
+                                   flex-direction: column;
+                                   gap: 2px;
+                                   transition: background 0.2s ease, border-color 0.2s ease;
+                                }
+                                .accura-product-card:hover .accura-spec-item {
+                                   background: #f4f8f9;
+                                   border-color: #e2ecf0;
+                                }
+                                .accura-spec-label {
+                                   font-size: 10px;
+                                   font-weight: 700;
+                                   color: #839598;
+                                   text-transform: uppercase;
+                                   letter-spacing: 0.5px;
+                                   line-height: 1.2;
+                                }
+                                .accura-spec-value {
+                                   font-size: 13px;
+                                   font-weight: 700;
+                                   color: #111e22;
+                                   line-height: 1.2;
+                                }
 
-                               /* Action Button */
-                               .accura-btn-enquire {
-                                  display: inline-flex;
-                                  align-items: center;
-                                  justify-content: center;
-                                  gap: 6px;
-                                  background: #0c1e21;
-                                  color: #ffffff !important;
-                                  font-size: 12px;
-                                  font-weight: 600;
-                                  padding: 8px 14px;
-                                  border-radius: 8px;
-                                  text-decoration: none;
-                                  transition: all 0.25s ease;
-                                  white-space: nowrap;
-                               }
-                               .accura-btn-enquire i {
-                                  font-size: 11px;
-                                  transition: transform 0.25s ease;
-                               }
-                               .accura-btn-enquire:hover {
-                                  background: #1e8a8a;
-                                  box-shadow: 0 4px 12px rgba(30, 138, 138, 0.35);
-                               }
-                               .accura-btn-enquire:hover i {
-                                  transform: translateX(3px);
-                               }
+                                /* Card Footer: Price & Action */
+                                .accura-card-footer {
+                                   border-top: 1px dashed #e2e8ea;
+                                   padding-top: 14px;
+                                   margin-top: auto;
+                                   display: flex;
+                                   align-items: center;
+                                   justify-content: space-between;
+                                   gap: 10px;
+                                }
+                                .accura-price-group {
+                                   display: flex;
+                                   flex-direction: column;
+                                }
+                                .accura-price-tagline {
+                                   font-size: 10px;
+                                   font-weight: 700;
+                                   color: #839598;
+                                   text-transform: uppercase;
+                                   letter-spacing: 0.5px;
+                                   line-height: 1;
+                                   margin-bottom: 3px;
+                                }
+                                .accura-price-value {
+                                   font-size: 19px;
+                                   font-weight: 800;
+                                   color: #0c1e21;
+                                   line-height: 1.1;
+                                }
+                                .accura-price-value .currency {
+                                   font-size: 14px;
+                                   font-weight: 700;
+                                   margin-right: 1px;
+                                   color: #1e8a8a;
+                                }
 
-                               /* Description if present */
-                               .accura-product-desc {
-                                  font-size: 13px;
-                                  color: #67787a;
-                                  line-height: 1.5;
-                                  margin-bottom: 12px;
-                                  display: -webkit-box;
-                                  -webkit-line-clamp: 2;
-                                  -webkit-box-orient: vertical;
-                                  overflow: hidden;
-                               }
-                            </style>
+                                /* Action Button */
+                                .accura-btn-enquire {
+                                   display: inline-flex;
+                                   align-items: center;
+                                   justify-content: center;
+                                   gap: 6px;
+                                   background: #0c1e21;
+                                   color: #ffffff !important;
+                                   font-size: 12px;
+                                   font-weight: 600;
+                                   padding: 8px 14px;
+                                   border-radius: 8px;
+                                   text-decoration: none;
+                                   transition: all 0.25s ease;
+                                   white-space: nowrap;
+                                }
+                                .accura-btn-enquire i {
+                                   font-size: 11px;
+                                   transition: transform 0.25s ease;
+                                }
+                                .accura-btn-enquire:hover {
+                                   background: #1e8a8a;
+                                   box-shadow: 0 4px 12px rgba(30, 138, 138, 0.35);
+                                }
+                                .accura-btn-enquire:hover i {
+                                   transform: translateX(3px);
+                                }
 
-                            @forelse($category->subCategories as $subCategory)
-                            <div class="subcategory-section mb-5">
-                                <div class="subcategory-header-wrap">
-                                    <h2 class="subcategory-title-corporate">{{ $subCategory->title }}</h2>
-                                    <span class="subcategory-badge-count">
-                                        <i class="fa-solid fa-layer-group me-1"></i> {{ $subCategory->products->count() }} {{ \Illuminate\Support\Str::plural('Model', $subCategory->products->count()) }}
-                                    </span>
-                                </div>
-                                
-                                <div class="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 accura-product-grid">
-                                   @forelse($subCategory->products as $product)
-                                      <div class="col accura-grid-item">
-                                          <div class="accura-product-card">
-                                              {{-- Card Header: Code & Size Badges --}}
-                                              <div class="accura-card-header">
-                                                  @if($product->code)
-                                                  <span class="accura-card-badge-code">
-                                                      <i class="fa-solid fa-hashtag"></i> {{ $product->code }}
-                                                  </span>
-                                                  @else
-                                                  <span></span>
-                                                  @endif
+                                /* Description if present */
+                                .accura-product-desc {
+                                   font-size: 13px;
+                                   color: #67787a;
+                                   line-height: 1.5;
+                                   margin-bottom: 12px;
+                                   display: -webkit-box;
+                                   -webkit-line-clamp: 2;
+                                   -webkit-box-orient: vertical;
+                                   overflow: hidden;
+                                }
+                             
+                                 /* 3-Card Responsive Refinements */
+                                 .accura-card-image-box {
+                                    height: 220px;
+                                 }
+                                 @media (max-width: 1199px) {
+                                    .accura-card-image-box {
+                                       height: 205px;
+                                    }
+                                 }
+                                 @media (max-width: 991px) {
+                                    .accura-card-image-box {
+                                       height: 200px;
+                                    }
+                                    .subcategory-title-corporate {
+                                       font-size: 19px;
+                                    }
+                                 }
+                                 @media (max-width: 767px) {
+                                    .accura-product-card {
+                                       padding: 16px;
+                                    }
+                                    .accura-card-image-box {
+                                       height: 185px;
+                                       padding: 12px 8px;
+                                    }
+                                    .subcategory-title-corporate {
+                                       font-size: 17px;
+                                       padding-left: 10px;
+                                    }
+                                    .subcategory-badge-count {
+                                       font-size: 11px;
+                                       padding: 4px 10px;
+                                    }
+                                    .accura-product-title {
+                                       font-size: 15px;
+                                       min-height: auto;
+                                       margin-bottom: 10px;
+                                    }
+                                 }
+                                 @media (max-width: 575px) {
+                                    .accura-specs-grid {
+                                       gap: 6px;
+                                    }
+                                    .accura-spec-item {
+                                       padding: 6px 8px;
+                                    }
+                                    .accura-price-value {
+                                       font-size: 17px;
+                                    }
+                                 }
+                              </style>
 
-                                                  @if($product->size)
-                                                  <span class="accura-card-badge-size">
-                                                      <i class="fa-solid fa-microchip"></i> {{ $product->size }}
-                                                  </span>
-                                                  @endif
-                                              </div>
+                             @forelse($category->subCategories as $subCategory)
+                             @if($subCategory->products->count() > 0)
+                             <div class="subcategory-section mb-5">
+                                 <div class="subcategory-header-wrap">
+                                     <h2 class="subcategory-title-corporate">{{ $subCategory->title }}</h2>
+                                     <span class="subcategory-badge-count">
+                                         <i class="fa-solid fa-layer-group me-1"></i> {{ $subCategory->products->count() }} {{ \Illuminate\Support\Str::plural('Model', $subCategory->products->count()) }}
+                                     </span>
+                                 </div>
+                                 
+                                 <div class="row g-4 row-cols-xxl-3 row-cols-xl-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-1 accura-product-grid">
+                                    @forelse($subCategory->products as $product)
+                                       <div class="col accura-grid-item">
+                                           <div class="accura-product-card">
+                                               {{-- Card Header: Code & Size Badges --}}
+                                               <div class="accura-card-header">
+                                                   @if($product->code)
+                                                   <span class="accura-card-badge-code">
+                                                       <i class="fa-solid fa-hashtag"></i> {{ $product->code }}
+                                                   </span>
+                                                   @else
+                                                   <span></span>
+                                                   @endif
 
-                                              {{-- Showcase Product Image --}}
-                                              <div class="accura-card-image-box">
-                                                  @if($product->image)
-                                                  <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" loading="lazy">
-                                                  @else
-                                                  <img src="{{ asset('assets/images/product/product-1.webp') }}" alt="{{ $product->title }}" loading="lazy">
-                                                  @endif
-                                              </div>
+                                                   @if($product->size)
+                                                   <span class="accura-card-badge-size">
+                                                       <i class="fa-solid fa-microchip"></i> {{ $product->size }}
+                                                   </span>
+                                                   @endif
+                                               </div>
 
-                                              {{-- Product Title --}}
-                                              <h3 class="accura-product-title" title="{{ $product->title }}">
-                                                  {{ $product->title }}
-                                              </h3>
+                                               {{-- Showcase Product Image --}}
+                                               <div class="accura-card-image-box">
+                                                   <img src="{{ storage_asset($product->image, 'assets/images/product/product-1.webp') }}" alt="{{ $product->title }}" loading="lazy">
+                                               </div>
 
-                                              {{-- Description if present --}}
-                                              @if($product->description)
-                                              <div class="accura-product-desc">
-                                                 {!! strip_tags($product->description) !!}
-                                              </div>
-                                              @endif
+                                               {{-- Product Title --}}
+                                               <h3 class="accura-product-title" title="{{ $product->title }}">
+                                                   {{ $product->title }}
+                                               </h3>
 
-                                              {{-- Corporate Specifications Grid --}}
-                                              <div class="accura-specs-grid">
-                                                  @if($product->code)
-                                                  <div class="accura-spec-item">
-                                                      <span class="accura-spec-label">Code</span>
-                                                      <span class="accura-spec-value">{{ $product->code }}</span>
-                                                  </div>
-                                                  @endif
+                                               {{-- Description if present & distinct --}}
+                                               @if($product->description && strcasecmp(strip_tags($product->description), strip_tags($product->title)) !== 0)
+                                               <div class="accura-product-desc">
+                                                  {!! strip_tags($product->description) !!}
+                                               </div>
+                                               @endif
 
-                                                  @if($product->size)
-                                                  <div class="accura-spec-item">
-                                                      <span class="accura-spec-label">Module / Size</span>
-                                                      <span class="accura-spec-value">{{ $product->size }}</span>
-                                                  </div>
-                                                  @endif
+                                               {{-- Corporate Specifications Grid --}}
+                                               <div class="accura-specs-grid">
+                                                   @if($product->code)
+                                                   <div class="accura-spec-item">
+                                                       <span class="accura-spec-label">Code</span>
+                                                       <span class="accura-spec-value">{{ $product->code }}</span>
+                                                   </div>
+                                                   @endif
 
-                                                  @if($product->pkd)
-                                                  <div class="accura-spec-item">
-                                                      <span class="accura-spec-label">Pkg. Quantity</span>
-                                                      <span class="accura-spec-value">{{ $product->pkd }} Pcs</span>
-                                                  </div>
-                                                  @endif
+                                                   @if($product->size)
+                                                   <div class="accura-spec-item">
+                                                       <span class="accura-spec-label">Module / Size</span>
+                                                       <span class="accura-spec-value">{{ $product->size }}</span>
+                                                   </div>
+                                                   @endif
 
-                                                  <div class="accura-spec-item">
-                                                      <span class="accura-spec-label">Series Range</span>
-                                                      <span class="accura-spec-value text-truncate" title="{{ $category->name }}">{{ $category->name }}</span>
-                                                  </div>
-                                              </div>
+                                                   @if($product->pkd)
+                                                   <div class="accura-spec-item">
+                                                       <span class="accura-spec-label">Pkg. Quantity</span>
+                                                       <span class="accura-spec-value">{{ $product->pkd }} Pcs</span>
+                                                   </div>
+                                                   @endif
 
-                                              {{-- Card Footer: MRP & Action --}}
-                                              <div class="accura-card-footer">
-                                                  <div class="accura-price-group">
-                                                      <span class="accura-price-tagline">MRP (Incl. Taxes)</span>
-                                                      @if($product->price)
-                                                      <span class="accura-price-value">
-                                                          <span class="currency">₹</span>{{ is_numeric($product->price) ? number_format((float)$product->price, 2) : $product->price }}
-                                                      </span>
-                                                      @else
-                                                      <span class="accura-price-value" style="font-size: 15px; color: #1e8a8a;">
-                                                          On Request
-                                                      </span>
-                                                      @endif
-                                                  </div>
+                                                   <div class="accura-spec-item">
+                                                       <span class="accura-spec-label">Series Range</span>
+                                                       <span class="accura-spec-value text-truncate" title="{{ $category->name }}">{{ $category->name }}</span>
+                                                   </div>
+                                               </div>
 
-                                                  <a href="{{ route('contact') }}?product={{ urlencode($product->title . ($product->code ? ' (' . $product->code . ')' : '')) }}" class="accura-btn-enquire">
-                                                      <span>Enquire</span>
-                                                      <i class="fa-solid fa-arrow-right"></i>
-                                                  </a>
-                                              </div>
-                                          </div>
-                                      </div>
-                                   @empty
-                                   <div class="col-12">
-                                      <p class="text-muted">No models in this subcategory.</p>
-                                   </div>
-                                   @endforelse
-                                </div>
-                            </div>
-                            @empty
-                            <div class="col-12">
-                                <p class="text-center">No subcategories found in this category.</p>
-                            </div>
-                            @endforelse
+                                               {{-- Card Footer: MRP & Action --}}
+                                               <div class="accura-card-footer">
+                                                   <div class="accura-price-group">
+                                                       <span class="accura-price-tagline">MRP (Incl. Taxes)</span>
+                                                       @if($product->price)
+                                                       <span class="accura-price-value">
+                                                           <span class="currency">₹</span>{{ is_numeric($product->price) ? number_format((float)$product->price, 2) : $product->price }}
+                                                       </span>
+                                                       @else
+                                                       <span class="accura-price-value" style="font-size: 15px; color: #1e8a8a;">
+                                                           On Request
+                                                       </span>
+                                                       @endif
+                                                   </div>
 
-                        </div>
+                                                   <a href="{{ route('contact') }}?product={{ urlencode($product->title . ($product->code ? ' (' . $product->code . ')' : '')) }}" class="accura-btn-enquire">
+                                                       <span>Enquire</span>
+                                                       <i class="fa-solid fa-arrow-right"></i>
+                                                   </a>
+                                               </div>
+                                           </div>
+                                       </div>
+                                    @empty
+                                    <div class="col-12">
+                                       <p class="text-muted">No models in this subcategory.</p>
+                                    </div>
+                                    @endforelse
+                                 </div>
+                             </div>
+                             @endif
+                             @empty
+                             @endforelse
+
+                             {{-- Direct Category Products (if any are created without a subcategory) --}}
+                             @php
+                                 $directProducts = $category->products->whereNull('sub_category_id');
+                             @endphp
+                             @if($directProducts->count() > 0)
+                             <div class="subcategory-section mb-5">
+                                 <div class="subcategory-header-wrap">
+                                     <h2 class="subcategory-title-corporate">{{ $category->name }} - Additional Models</h2>
+                                     <span class="subcategory-badge-count">
+                                         <i class="fa-solid fa-layer-group me-1"></i> {{ $directProducts->count() }} {{ \Illuminate\Support\Str::plural('Model', $directProducts->count()) }}
+                                     </span>
+                                 </div>
+                                 <div class="row g-4 row-cols-xxl-3 row-cols-xl-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-1 accura-product-grid">
+                                     @foreach($directProducts as $product)
+                                        <div class="col accura-grid-item">
+                                            <div class="accura-product-card">
+                                                <div class="accura-card-header">
+                                                    @if($product->code)
+                                                    <span class="accura-card-badge-code">
+                                                        <i class="fa-solid fa-hashtag"></i> {{ $product->code }}
+                                                    </span>
+                                                    @else
+                                                    <span></span>
+                                                    @endif
+
+                                                    @if($product->size)
+                                                    <span class="accura-card-badge-size">
+                                                        <i class="fa-solid fa-microchip"></i> {{ $product->size }}
+                                                    </span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="accura-card-image-box">
+                                                    <img src="{{ storage_asset($product->image, 'assets/images/product/product-1.webp') }}" alt="{{ $product->title }}" loading="lazy">
+                                                </div>
+
+                                                <h3 class="accura-product-title" title="{{ $product->title }}">
+                                                    {{ $product->title }}
+                                                </h3>
+
+                                                @if($product->description && strcasecmp(strip_tags($product->description), strip_tags($product->title)) !== 0)
+                                                <div class="accura-product-desc">
+                                                   {!! strip_tags($product->description) !!}
+                                                </div>
+                                                @endif
+
+                                                <div class="accura-specs-grid">
+                                                    @if($product->code)
+                                                    <div class="accura-spec-item">
+                                                        <span class="accura-spec-label">Code</span>
+                                                        <span class="accura-spec-value">{{ $product->code }}</span>
+                                                    </div>
+                                                    @endif
+
+                                                    @if($product->size)
+                                                    <div class="accura-spec-item">
+                                                        <span class="accura-spec-label">Module / Size</span>
+                                                        <span class="accura-spec-value">{{ $product->size }}</span>
+                                                    </div>
+                                                    @endif
+
+                                                    @if($product->pkd)
+                                                    <div class="accura-spec-item">
+                                                        <span class="accura-spec-label">Pkg. Quantity</span>
+                                                        <span class="accura-spec-value">{{ $product->pkd }} Pcs</span>
+                                                    </div>
+                                                    @endif
+
+                                                    <div class="accura-spec-item">
+                                                        <span class="accura-spec-label">Series Range</span>
+                                                        <span class="accura-spec-value text-truncate" title="{{ $category->name }}">{{ $category->name }}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="accura-card-footer">
+                                                    <div class="accura-price-group">
+                                                        <span class="accura-price-tagline">MRP (Incl. Taxes)</span>
+                                                        @if($product->price)
+                                                        <span class="accura-price-value">
+                                                            <span class="currency">₹</span>{{ is_numeric($product->price) ? number_format((float)$product->price, 2) : $product->price }}
+                                                        </span>
+                                                        @else
+                                                        <span class="accura-price-value" style="font-size: 15px; color: #1e8a8a;">
+                                                            On Request
+                                                        </span>
+                                                        @endif
+                                                    </div>
+
+                                                    <a href="{{ route('contact') }}?product={{ urlencode($product->title . ($product->code ? ' (' . $product->code . ')' : '')) }}" class="accura-btn-enquire">
+                                                        <span>Enquire</span>
+                                                        <i class="fa-solid fa-arrow-right"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     @endforeach
+                                 </div>
+                             </div>
+                             @endif
+
+                             @if($category->subCategories->count() === 0 && $directProducts->count() === 0)
+                             <div class="col-12 py-5 text-center">
+                                 <p class="text-muted">No products currently available in this category.</p>
+                             </div>
+                             @endif
+
+                         </div>
 
                      </div>
 

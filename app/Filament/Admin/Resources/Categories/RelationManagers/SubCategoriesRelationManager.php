@@ -47,8 +47,16 @@ class SubCategoriesRelationManager extends RelationManager
             ])
             ->recordActions([
                 EditAction::make()
+                    ->iconButton()
+                    ->icon('heroicon-o-pencil-square')
+                    ->color('gray')
+                    ->tooltip('Edit Sub Category')
                     ->url(fn (Model $record): string => \App\Filament\Admin\Resources\SubCategories\SubCategoryResource::getUrl('edit', ['record' => $record])),
-                DeleteAction::make(),
+                DeleteAction::make()
+                    ->iconButton()
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->tooltip('Delete Sub Category'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

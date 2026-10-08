@@ -52,6 +52,7 @@ class ProductForm
                                         ->searchable()
                                         ->preload()
                                         ->live()
+                                        ->afterStateUpdated(fn ($set) => $set('sub_category_id', null))
                                         ->placeholder('Select Category')
                                         ->nullable(),
 
@@ -69,6 +70,12 @@ class ProductForm
                                         ->preload()
                                         ->placeholder('Select Sub Category')
                                         ->nullable(),
+
+                                    TextInput::make('tags')
+                                        ->label('Color / Finish')
+                                        ->prefixIcon('heroicon-o-paint-brush')
+                                        ->placeholder('e.g. Pure White, Matt Black, Graphite Grey')
+                                        ->maxLength(255),
                                 ]),
                         ]),
 

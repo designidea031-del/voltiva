@@ -175,13 +175,13 @@ class PageController extends Controller
 
     public function product()
     {
-        $categories = Category::with(['subCategories.products'])->get();
+        $categories = Category::with(['subCategories.products', 'products'])->get();
         return view('product', compact('categories'));
     }
 
     public function categoryProducts($id)
     {
-        $category = Category::with(['subCategories.products'])->findOrFail($id);
+        $category = Category::with(['subCategories.products', 'products'])->findOrFail($id);
         return view('category-products', compact('category'));
     }
 }

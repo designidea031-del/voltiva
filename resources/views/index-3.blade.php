@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="{{ asset('assets/css/odometer-theme-default.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/meanmenu.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+  <!-- Google Font: Sacramento -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -592,7 +596,8 @@
           </div>
 
           <style>
-            @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@900&family=Outfit:wght@800;900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Outfit:wght@800;900&display=swap');
 
             .tj-prime-showcase-section {
               position: relative;
@@ -684,12 +689,12 @@
               user-select: none;
             }
             .prime-script-text {
-              font-family: 'Caveat', cursive;
-              font-size: clamp(22px, 4.2cqi, 66px);
-              font-weight: 600;
-              color: #64748b;
+              font-family: 'Sacramento', cursive;
+              font-size: clamp(32px, 6.2cqi, 92px);
+              font-weight: 400;
+              color: #475569;
               line-height: 1;
-              margin-bottom: -0.3cqi;
+              margin-bottom: -0.2cqi;
               margin-right: 0.3cqi;
               transform: rotate(-1.5deg);
             }

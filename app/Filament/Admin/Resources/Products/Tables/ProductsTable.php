@@ -55,6 +55,19 @@ class ProductsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
 
+                TextColumn::make('tags')
+                    ->label('Color / Finish')
+                    ->badge()
+                    ->color(fn ($state) => match(true) {
+                        str_contains(strtolower($state ?? ''), 'black') => 'gray',
+                        str_contains(strtolower($state ?? ''), 'grey') => 'slate',
+                        str_contains(strtolower($state ?? ''), 'wood') => 'warning',
+                        default => 'success',
+                    })
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('price')
                     ->label('Price')
                     ->money('INR')
@@ -93,6 +106,19 @@ class ProductsTable
                     ->relationship('subCategory', 'title')
                     ->searchable()
                     ->preload(),
+
+                SelectFilter::make('tags')
+                    ->label('Color / Finish')
+                    ->options([
+                        'Pure White' => 'Pure White',
+                        'Matt Black' => 'Matt Black',
+                        'Graphite Grey' => 'Graphite Grey',
+                        'Woody Finish' => 'Woody Finish',
+                        'Silver Border' => 'Silver Border',
+                        'White Border' => 'White Border',
+                        'Copper Glass' => 'Copper Glass',
+                        'Wooden Glass' => 'Wooden Glass',
+                    ]),
             ])
             ->filtersTriggerAction(
                 fn (\Filament\Actions\Action $action) => $action

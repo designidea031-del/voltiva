@@ -45,6 +45,15 @@
             background-position: center center !important;
             background-repeat: no-repeat !important;
             border-radius: 14px !important;
+            display: flex !important;
+            align-items: flex-end !important;
+            justify-content: flex-start !important;
+            padding-top: clamp(24px, 3.8vw, 55px) !important;
+            padding-bottom: clamp(24px, 3.8vw, 55px) !important;
+            padding-left: clamp(15px, 2.5vw, 35px) !important;
+            padding-right: clamp(15px, 2.5vw, 35px) !important;
+            position: relative !important;
+            overflow: hidden !important;
         }
         @media (max-width: 767px) {
             .tj-page-header {
@@ -52,7 +61,10 @@
                 margin-left: 12px !important;
                 margin-right: 12px !important;
                 border-radius: 10px !important;
-                min-height: 240px !important;
+                min-height: 250px !important;
+                padding-bottom: 20px !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
             }
         }
         @if($mobileImage)
@@ -62,18 +74,69 @@
             }
         }
         @endif
+        .tj-page-header .tj-page-header-content {
+            text-align: left !important;
+        }
+        .tj-page-header .tj-page-title {
+            color: #ffffff !important;
+            font-size: clamp(22px, 3.4vw, 48px) !important;
+            font-weight: 700 !important;
+            line-height: 1.15 !important;
+            margin-bottom: 0 !important;
+            text-align: left !important;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45) !important;
+        }
+        .tj-page-header .tj-page-subtitle {
+            color: rgba(255, 255, 255, 0.92) !important;
+            font-size: clamp(13px, 1.15vw, 16px) !important;
+            max-width: 620px !important;
+            margin: 8px 0 14px 0 !important;
+            font-weight: 400 !important;
+            line-height: 1.55 !important;
+            text-align: left !important;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45) !important;
+        }
+        .tj-page-header .tj-page-link {
+            margin-top: clamp(6px, 1vw, 14px) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: clamp(4px, 0.8vw, 8px) !important;
+            background: rgba(15, 23, 42, 0.5) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            padding: clamp(4px, 0.6vw, 7px) clamp(10px, 1.2vw, 18px) !important;
+            border-radius: 50px !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+        }
+        .tj-page-header .tj-page-link span {
+            color: #ffffff !important;
+            font-size: clamp(11px, 1vw, 14px) !important;
+        }
+        .tj-page-header .tj-page-link span i {
+            font-size: clamp(10px, 0.9vw, 13px) !important;
+            opacity: 0.85 !important;
+        }
+        .tj-page-header .tj-page-link span a {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: color 0.2s ease !important;
+        }
+        .tj-page-header .tj-page-link span a:hover {
+            color: #00b4d8 !important;
+        }
     </style>
 
-    <div class="page-header-dimmer" style="position: absolute; inset: 0; background: rgba(14, 19, 30, {{ $overlayOpacity }}); z-index: 1; pointer-events: none;"></div>
+    <div class="page-header-dimmer" style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 14, 23, {{ min(1, $overlayOpacity + 0.35) }}) 0%, rgba(10, 14, 23, {{ $overlayOpacity }}) 50%, rgba(10, 14, 23, {{ max(0.08, $overlayOpacity - 0.25) }}) 100%); z-index: 1; pointer-events: none;"></div>
 
-    <div class="container" style="position: relative; z-index: 2;">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="tj-page-header-content text-center">
+    <div class="container" style="position: relative; z-index: 2; width: 100%; max-width: 100%; padding-left: 0; padding-right: 0;">
+        <div class="row align-items-end">
+            <div class="col-xl-7 col-lg-8 col-md-10">
+                <div class="tj-page-header-content text-start">
                     <h1 class="tj-page-title" style="color: #ffffff;">{{ $displayTitle }}</h1>
 
                     @if(!empty($subtitle))
-                        <p class="tj-page-subtitle" style="color: rgba(255, 255, 255, 0.9); font-size: 16px; max-width: 680px; margin: 10px auto 16px; font-weight: 500; line-height: 1.55;">
+                        <p class="tj-page-subtitle">
                             {{ $subtitle }}
                         </p>
                     @endif

@@ -1757,15 +1757,17 @@ html.dark .fi-ta-col-manager .fi-btn * {
 
 /* Edit Action Button */
 .fi-ta-actions a.fi-icon-btn,
+.fi-ta-actions button.fi-icon-btn:not(.fi-color-danger):not([wire\:click*="delete"]),
 .fi-ta-actions .fi-icon-btn.fi-color-primary,
 .fi-ta-actions .fi-icon-btn.fi-color-gray {
     background: #ffffff !important;
-    border: 1px solid #e8e8e8 !important;
-    color: #27272a !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #475569 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
 }
 
 .fi-ta-actions a.fi-icon-btn:hover,
+.fi-ta-actions button.fi-icon-btn:not(.fi-color-danger):not([wire\:click*="delete"]):hover,
 .fi-ta-actions .fi-icon-btn.fi-color-primary:hover,
 .fi-ta-actions .fi-icon-btn.fi-color-gray:hover {
     background: #18181b !important;
@@ -1775,6 +1777,7 @@ html.dark .fi-ta-col-manager .fi-btn * {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
 }
 .fi-ta-actions a.fi-icon-btn:hover svg,
+.fi-ta-actions button.fi-icon-btn:not(.fi-color-danger):not([wire\:click*="delete"]):hover svg,
 .fi-ta-actions .fi-icon-btn.fi-color-primary:hover svg,
 .fi-ta-actions .fi-icon-btn.fi-color-gray:hover svg {
     color: #ffffff !important;
@@ -1785,9 +1788,9 @@ html.dark .fi-ta-col-manager .fi-btn * {
 .fi-ta-actions button.fi-icon-btn[wire\:click*="delete"],
 .fi-ta-actions .fi-icon-btn.fi-color-danger {
     background: #ffffff !important;
-    border: 1px solid rgba(239, 68, 68, 0.25) !important;
+    border: 1px solid #e2e8f0 !important;
     color: #ef4444 !important;
-    box-shadow: 0 1px 2px rgba(239, 68, 68, 0.05) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
 }
 
 .fi-ta-actions button.fi-icon-btn[wire\:click*="delete"]:hover,
@@ -1806,6 +1809,7 @@ html.dark .fi-ta-col-manager .fi-btn * {
 
 /* Dark mode for table action buttons */
 html.dark .fi-ta-actions a.fi-icon-btn,
+html.dark .fi-ta-actions button.fi-icon-btn:not(.fi-color-danger):not([wire\:click*="delete"]),
 html.dark .fi-ta-actions .fi-icon-btn.fi-color-primary,
 html.dark .fi-ta-actions .fi-icon-btn.fi-color-gray {
     background: #18181b !important;
@@ -1813,6 +1817,7 @@ html.dark .fi-ta-actions .fi-icon-btn.fi-color-gray {
     color: #f4f4f5 !important;
 }
 html.dark .fi-ta-actions a.fi-icon-btn:hover,
+html.dark .fi-ta-actions button.fi-icon-btn:not(.fi-color-danger):not([wire\:click*="delete"]):hover,
 html.dark .fi-ta-actions .fi-icon-btn.fi-color-primary:hover,
 html.dark .fi-ta-actions .fi-icon-btn.fi-color-gray:hover {
     background: #27272a !important;
@@ -1833,7 +1838,251 @@ html.dark .fi-ta-actions .fi-icon-btn.fi-color-danger:hover {
     color: #ffffff !important;
 }
 
-/* 5. Modal Close Button */
+/* ============================================================
+   MODALS (Filament Dialogs & Forms)
+   ============================================================ */
+.fi-modal-window {
+    width: 100% !important;
+    max-width: 880px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #ffffff !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: 88vh !important;
+}
+
+/* Explicit Width Modifiers for Filament Modals */
+.fi-modal-window.fi-width-xs { max-width: 24rem !important; }
+.fi-modal-window.fi-width-sm { max-width: 28rem !important; }
+.fi-modal-window.fi-width-md { max-width: 32rem !important; }
+.fi-modal-window.fi-width-lg { max-width: 38rem !important; }
+.fi-modal-window.fi-width-xl { max-width: 44rem !important; }
+.fi-modal-window.fi-width-2xl { max-width: 50rem !important; }
+.fi-modal-window.fi-width-3xl { max-width: 56rem !important; }
+.fi-modal-window.fi-width-4xl { max-width: 60rem !important; }
+.fi-modal-window.fi-width-5xl { max-width: 68rem !important; }
+
+/* Sticky Modal Header */
+.fi-modal-header {
+    padding: 1.25rem 2rem !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    background-color: #ffffff !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.fi-modal-heading {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    letter-spacing: -0.015em !important;
+    text-align: left !important;
+}
+
+/* Scrollable Modal Content */
+.fi-modal-content {
+    padding: 1.75rem 2rem !important;
+    background-color: #ffffff !important;
+    overflow-y: auto !important;
+    flex: 1 1 auto !important;
+    max-height: calc(88vh - 145px) !important;
+}
+
+/* Sticky Modal Footer */
+.fi-modal-footer,
+.fi-modal-window .fi-modal-footer {
+    padding: 1.15rem 2rem !important;
+    border-top: 1px solid #f1f5f9 !important;
+    background-color: #f8fafc !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 30 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+}
+
+.fi-modal-footer-actions,
+.fi-modal-window .fi-modal-footer-actions,
+.fi-modal-window .fi-modal-footer .fi-modal-footer-actions {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    grid-template-columns: none !important;
+}
+
+/* Individual Modal Footer Buttons - Side-by-side, compact, elegant */
+.fi-modal-footer-actions > *,
+.fi-modal-footer-actions button,
+.fi-modal-footer-actions .fi-btn,
+.fi-modal-footer-actions a {
+    width: auto !important;
+    max-width: fit-content !important;
+    min-width: 110px !important;
+    height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    border-radius: 9px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+    cursor: pointer !important;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ============================================================
+   MODAL FOOTER BUTTONS (EXACT THEME MATCH)
+   ============================================================ */
+/* Submit / Primary (Save changes) Button */
+.fi-modal-footer-actions button[type="submit"],
+.fi-modal-footer-actions .fi-btn.fi-color-primary,
+.fi-modal-footer button[type="submit"],
+.fi-modal-footer .fi-btn.fi-color-primary {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    border-radius: 10px !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    height: 38px !important;
+    padding: 0 1.35rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.fi-modal-footer-actions button[type="submit"] *,
+.fi-modal-footer-actions .fi-btn.fi-color-primary *,
+.fi-modal-footer button[type="submit"] *,
+.fi-modal-footer .fi-btn.fi-color-primary * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    --text: #ffffff !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.fi-modal-footer-actions button[type="submit"]:hover,
+.fi-modal-footer-actions .fi-btn.fi-color-primary:hover,
+.fi-modal-footer button[type="submit"]:hover,
+.fi-modal-footer .fi-btn.fi-color-primary:hover {
+    background-color: #525252 !important;
+    border-color: #525252 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+    transform: translateY(-1px) !important;
+}
+
+.fi-modal-footer-actions button[type="submit"]:hover *,
+.fi-modal-footer-actions .fi-btn.fi-color-primary:hover *,
+.fi-modal-footer button[type="submit"]:hover *,
+.fi-modal-footer .fi-btn.fi-color-primary:hover * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Cancel / Gray Button */
+.fi-modal-footer-actions button[x-on\:click*="close"],
+.fi-modal-footer-actions button[type="button"],
+.fi-modal-footer-actions .fi-btn.fi-color-gray,
+.fi-modal-footer button[x-on\:click*="close"],
+.fi-modal-footer button[type="button"],
+.fi-modal-footer .fi-btn.fi-color-gray {
+    background-color: #ffffff !important;
+    color: #525252 !important;
+    -webkit-text-fill-color: #525252 !important;
+    border: 1px solid #b7b7b7 !important;
+    border-radius: 10px !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    height: 38px !important;
+    padding: 0 1.25rem !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.fi-modal-footer-actions button[x-on\:click*="close"] *,
+.fi-modal-footer-actions button[type="button"] *,
+.fi-modal-footer-actions .fi-btn.fi-color-gray *,
+.fi-modal-footer button[x-on\:click*="close"] *,
+.fi-modal-footer button[type="button"] *,
+.fi-modal-footer .fi-btn.fi-color-gray * {
+    color: #525252 !important;
+    -webkit-text-fill-color: #525252 !important;
+    --text: #525252 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.fi-modal-footer-actions button[x-on\:click*="close"]:hover,
+.fi-modal-footer-actions button[type="button"]:hover,
+.fi-modal-footer-actions .fi-btn.fi-color-gray:hover,
+.fi-modal-footer button[x-on\:click*="close"]:hover,
+.fi-modal-footer button[type="button"]:hover,
+.fi-modal-footer .fi-btn.fi-color-gray:hover {
+    background-color: #e8e8e8 !important;
+    border-color: #8c8c8c !important;
+    color: #000000 !important;
+    transform: translateY(-1px) !important;
+}
+
+.fi-modal-footer-actions button[x-on\:click*="close"]:hover *,
+.fi-modal-footer-actions button[type="button"]:hover *,
+.fi-modal-footer-actions .fi-btn.fi-color-gray:hover *,
+.fi-modal-footer button[x-on\:click*="close"]:hover *,
+.fi-modal-footer button[type="button"]:hover *,
+.fi-modal-footer .fi-btn.fi-color-gray:hover * {
+    color: #000000 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* File Upload styling inside Modal (clean, not pitch black) */
+.fi-modal-content .filepond--root {
+    max-height: 180px !important;
+    min-height: 140px !important;
+    border-radius: 12px !important;
+}
+
+.fi-modal-content .filepond--panel-root {
+    background-color: #f8fafc !important;
+    border: 1.5px dashed #cbd5e1 !important;
+    border-radius: 12px !important;
+}
+
+.fi-modal-content .filepond--drop-label {
+    color: #64748b !important;
+}
+
+/* Modal Close Button */
 .fi-modal-close-btn {
     border-radius: 9999px !important;
     transition: all 0.15s ease !important;
