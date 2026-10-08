@@ -200,6 +200,93 @@ Route::get('/setup-hostinger', function () {
     return redirect()->route('fix-storage');
 });
 
+Route::get('/sync-live-catalog', function () {
+    $dataFile = base_path('database/data/catalog.json');
+    if (!file_exists($dataFile)) {
+        return response('Error: database/data/catalog.json not found.', 404);
+    }
+
+    $data = json_decode(file_get_contents($dataFile), true);
+    if (!$data) {
+        return response('Error: Invalid JSON data.', 500);
+    }
+
+    $cats = $data['categories'] ?? [];
+    $subcats = $data['sub_categories'] ?? [];
+    $prods = $data['products'] ?? [];
+
+    \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    \App\Models\Product::truncate();
+    \App\Models\SubCategory::truncate();
+    \App\Models\Category::truncate();
+
+    // Insert categories
+    foreach ($cats as $cat) {
+        \App\Models\Category::create($cat);
+    }
+
+    // Insert subcategories
+    foreach ($subcats as $sub) {
+        \App\Models\SubCategory::create($sub);
+    }
+
+    // Insert products in chunks
+    foreach (array_chunk($prods, 50) as $chunk) {
+        \Illuminate\Support\Facades\DB::table('products')->insert($chunk);
+    }
+
+    \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+    // Clear caches
+    try {
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+    } catch (\Throwable $e) {}
+
+    $totalCats = \App\Models\Category::count();
+    $totalSubs = \App\Models\SubCategory::count();
+    $totalProds = \App\Models\Product::count();
+
+    return response('<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Voltiva Catalog Synced Successfully</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; padding: 40px 20px; text-align: center; }
+            .card { max-width: 600px; margin: 40px auto; background: #1e293b; border-radius: 16px; padding: 36px; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+            h1 { color: #38bdf8; font-size: 26px; margin-top: 0; }
+            .badge { display: inline-block; padding: 6px 16px; border-radius: 9999px; background: rgba(16, 185, 129, 0.2); color: #34d399; font-weight: 700; border: 1px solid #059669; margin-bottom: 24px; }
+            .stats { display: flex; justify-content: space-around; background: #0f172a; border-radius: 12px; padding: 20px; margin: 24px 0; border: 1px solid #334155; }
+            .stat-num { font-size: 32px; font-weight: 800; color: #38bdf8; }
+            .stat-label { font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+            .btn { display: inline-block; background: #2563eb; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.2s; margin-top: 10px; }
+            .btn:hover { background: #1d4ed8; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <h1>⚡ Voltiva Catalog Synced!</h1>
+            <div class="badge">Status: Live Database Updated</div>
+            <p style="color: #cbd5e1; font-size: 15px;">તમામ પ્રોડક્ટ્સ અને કેટેગરીઝ લાઈવ ડેટાબેઝમાં સફળતાપૂર્વક અપડેટ થઈ ગઈ છે.</p>
+            <div class="stats">
+                <div>
+                    <div class="stat-num">' . $totalCats . '</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div>
+                    <div class="stat-num">' . $totalSubs . '</div>
+                    <div class="stat-label">Sub Categories</div>
+                </div>
+                <div>
+                    <div class="stat-num">' . $totalProds . '</div>
+                    <div class="stat-label">Products</div>
+                </div>
+            </div>
+            <a href="/product" class="btn">View Products Catalog &rarr;</a>
+        </div>
+    </body>
+    </html>');
 Route::get('/git-pull', function () {
     $results = [];
     $commands = [
