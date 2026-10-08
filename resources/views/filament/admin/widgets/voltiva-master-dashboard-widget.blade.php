@@ -55,10 +55,11 @@
             if (this.reachChart) { try { this.reachChart.destroy(); } catch(e){} }
             const isDark = document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
             const reach = this.chartData.reach || {series:[62,26,12],labels:['Modular Touch Switches','Smart Sockets & Regulators','MCBs & Industrial Distribution']};
-            const defaultColors = ['#38bdf8','#40bac7','#a855f7','#f59e0b','#10b981'];
-            const chartColors = (reach.items && reach.items.length) ? reach.items.map(i => i.color) : defaultColors;
+            const defaultColors = ['#40bac7','#38bdf8','#8b5cf6','#a855f7','#f59e0b','#94a3b8'];
+            const chartColors = (reach.chartColors && reach.chartColors.length) ? reach.chartColors : defaultColors;
+            const totalProd = reach.totalProducts || '731';
             const options = {
-                chart:{type:'donut',height:210,fontFamily:'inherit',background:'transparent',animations:{enabled:true,easing:'easeinout',speed:700}},
+                chart:{type:'donut',height:190,fontFamily:'inherit',background:'transparent',animations:{enabled:true,easing:'easeinout',speed:700}},
                 series:reach.series, labels:reach.labels,
                 colors:chartColors,
                 plotOptions:{
@@ -76,32 +77,32 @@
                                 },
                                 value:{
                                     show:true,
-                                    fontSize:'22px',
+                                    fontSize:'20px',
                                     fontFamily:'Figtree, sans-serif',
                                     fontWeight:700,
                                     color:isDark?'#ffffff':'#09090b',
-                                    offsetY:6,
+                                    offsetY:4,
                                     formatter:(val)=>val+'%'
                                 },
                                 total:{
                                     show:true,
-                                    label:'DISTRIBUTION',
-                                    fontSize:'9px',
+                                    label:'TOTAL PRODUCTS',
+                                    fontSize:'8.5px',
                                     fontFamily:'Figtree, sans-serif',
-                                    fontWeight:600,
+                                    fontWeight:700,
                                     color:isDark?'#38bdf8':'#0284c7',
-                                    formatter:()=>'100%'
+                                    formatter:()=>totalProd
                                 }
                             }
                         }
                     }
                 },
                 dataLabels:{enabled:false}, legend:{show:false},
-                stroke:{show:true,width:3,colors:[isDark?'#202023':'#ffffff']},
+                stroke:{show:true,width:2,colors:[isDark?'#202023':'#ffffff']},
                 tooltip:{
                     theme:isDark?'dark':'light',
                     fillSeriesColor:false,
-                    y:{formatter:(val)=>val+'% Share'}
+                    y:{formatter:(val)=>val+'% share'}
                 }
             };
             this.reachChart = new ApexCharts(el, options);
@@ -284,16 +285,23 @@
         .vd-sync-dot{width:5px;height:5px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981;animation:vd-pulse 2s ease-in-out infinite;}
 
         /* Reach */
-        .vd-reach-item{padding:.65rem .8rem;border-radius:12px;border:1px solid #f0f0f0;background:#fafafa;}
+        .vd-reach-list{display:flex;flex-direction:column;gap:.5rem;max-height:225px;overflow-y:auto;padding-right:5px;}
+        .vd-reach-list::-webkit-scrollbar{width:4px;}
+        .vd-reach-list::-webkit-scrollbar-track{background:transparent;}
+        .vd-reach-list::-webkit-scrollbar-thumb{background:#e4e4e7;border-radius:99px;}
+        .dark .vd-reach-list::-webkit-scrollbar-thumb{background:#3f3f46;}
+        .vd-reach-item{padding:.6rem .75rem;border-radius:10px;border:1px solid #f0f0f0;background:#fafafa;transition:background .15s ease,border-color .15s ease;}
+        .vd-reach-item:hover{background:#f4f4f5;border-color:#e4e4e7;}
         .dark .vd-reach-item, html.dark .vd-reach-item{background:#202023 !important;border-color:#27272a !important;}
+        .dark .vd-reach-item:hover, html.dark .vd-reach-item:hover{background:#27272a !important;border-color:#3f3f46 !important;}
         .vd-reach-head{display:flex;align-items:center;justify-content:space-between;font-size:.76rem;font-weight:600;letter-spacing:-.01em;color:#09090b;margin-bottom:2px;}
         .dark .vd-reach-head, html.dark .vd-reach-head{color:#f4f4f5 !important;}
-        .vd-reach-name{display:inline-flex;align-items:center;gap:7px;color:inherit;}
-        .vd-reach-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;display:inline-block;box-shadow:0 0 4px rgba(0,0,0,.15);}
-        .vd-reach-val{font-size:.78rem;font-weight:700;color:inherit;}
-        .vd-reach-desc{font-size:.67rem;color:#71717a;margin-bottom:4px;font-weight:400;}
+        .vd-reach-name{display:inline-flex;align-items:center;gap:7px;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .vd-reach-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block;box-shadow:0 0 4px rgba(0,0,0,.15);}
+        .vd-reach-val{font-size:.78rem;font-weight:700;color:inherit;flex-shrink:0;margin-left:6px;}
+        .vd-reach-desc{font-size:.66rem;color:#71717a;margin-bottom:4px;font-weight:400;}
         .dark .vd-reach-desc, html.dark .vd-reach-desc{color:#a1a1aa !important;}
-        .vd-prog-bar{width:100%;height:5px;background:#e4e4e7;border-radius:99px;overflow:hidden;margin-top:5px;}
+        .vd-prog-bar{width:100%;height:4px;background:#e4e4e7;border-radius:99px;overflow:hidden;margin-top:4px;}
         .dark .vd-prog-bar, html.dark .vd-prog-bar{background:#27272a !important;}
         .vd-prog-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
 
@@ -521,26 +529,29 @@
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
                         Product Catalog Reach
                     </div>
-                    <div class="vd-card-desc">Live category distribution &amp; inquiry volume breakdown</div>
+                    <div class="vd-card-desc">Live category distribution &amp; catalog volume breakdown</div>
                 </div>
-                <a href="{{ url('/admin/products') }}" class="vd-view-link">View All &rarr;</a>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span class="vd-sync"><span class="vd-sync-dot"></span>{{ count($chartData['reach']['items']) }} Series</span>
+                    <a href="{{ url('/admin/categories') }}" class="vd-view-link">View All &rarr;</a>
+                </div>
             </div>
-            <div style="padding:1.1rem 1.3rem;flex:1;display:flex;flex-direction:column;gap:.8rem;">
-                <div wire:ignore style="display:flex;align-items:center;justify-content:center;width:100%;min-height:200px;">
-                    <div x-ref="reachChartRef" id="voltivaReachApexChart" style="width:100%;min-height:200px;"></div>
+            <div style="padding:1rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:.75rem;min-width:0;">
+                <div wire:ignore style="display:flex;align-items:center;justify-content:center;width:100%;min-height:190px;">
+                    <div x-ref="reachChartRef" id="voltivaReachApexChart" style="width:100%;min-height:190px;"></div>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:.45rem;">
+                <div class="vd-reach-list">
                     @foreach($chartData['reach']['items'] as $item)
                         <div class="vd-reach-item">
                             <div class="vd-reach-head">
-                                <span class="vd-reach-name">
+                                <span class="vd-reach-name" title="{{ $item['name'] }}">
                                     <span class="vd-reach-dot" style="background:{{ $item['color'] }};"></span>
                                     <span>{{ $item['name'] }}</span>
                                 </span>
                                 <span class="vd-reach-val">{{ $item['share'] }}%</span>
                             </div>
                             <div class="vd-reach-desc">{{ $item['desc'] }}</div>
-                            <div class="vd-prog-bar"><div class="vd-prog-fill" style="width:{{ $item['share'] }}%;background:{{ $item['color'] }};"></div></div>
+                            <div class="vd-prog-bar"><div class="vd-prog-fill" style="width:{{ min(100, max(3, $item['share'])) }}%;background:{{ $item['color'] }};"></div></div>
                         </div>
                     @endforeach
                 </div>

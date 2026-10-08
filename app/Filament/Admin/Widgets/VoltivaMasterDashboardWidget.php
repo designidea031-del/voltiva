@@ -70,46 +70,63 @@ class VoltivaMasterDashboardWidget extends Widget
         $leads1y = [18, 24, 31, 28, 39, 46, 42, 53, max($totalLeads, 62), 58, 67, 74];
 
         // 4. Catalog Reach Breakdown (Dynamic Category distribution)
-        $categories = Category::withCount('products')->get();
+        $categories = Category::withCount('products')->orderByDesc('products_count')->get();
         $totalProducts = Product::count();
         
         $reachSeries = [];
         $reachLabels = [];
         $reachItems = [];
+        $chartColors = [];
+        $palette = ['#40bac7', '#38bdf8', '#8b5cf6', '#a855f7', '#f59e0b', '#10b981', '#ec4899', '#6366f1', '#14b8a6', '#f97316'];
 
         if ($categories->isNotEmpty() && $totalProducts > 0) {
-            $colors = ['#38bdf8', '#40bac7', '#8b5cf6', '#a855f7', '#10b981'];
-            $colorIdx = 0;
-            foreach ($categories as $cat) {
-                $share = $totalProducts > 0 ? round(($cat->products_count / $totalProducts) * 100) : 0;
-                $c = $colors[$colorIdx % count($colors)];
-                $reachSeries[] = max($share, 15);
+            // Top 5 categories for Donut Chart Slices
+            $topCategories = $categories->take(5);
+            $topSum = 0;
+
+            foreach ($topCategories as $idx => $cat) {
+                $pct = round(($cat->products_count / $totalProducts) * 100, 1);
+                $topSum += $pct;
+                $c = $palette[$idx % count($palette)];
+                $reachSeries[] = $pct;
                 $reachLabels[] = $cat->name;
-                $reachItems[] = [
-                    'name'  => $cat->name,
-                    'share' => max($share, 15),
-                    'desc'  => ($cat->products_count) . ' Registered Catalog Products',
-                    'color' => $c,
-                ];
-                $colorIdx++;
+                $chartColors[] = $c;
             }
 
-            // Fill remaining if only 1 category exists
-            if (count($reachSeries) < 3) {
-                $reachSeries = [62, 26, 12];
-                $reachLabels = ['Modular Touch Switches', 'Smart Sockets & Regulators', 'MCBs & Industrial Distribution'];
-                $reachItems = [
-                    ['name' => 'Modular Touch Switches', 'share' => 62, 'desc' => 'High Demand • Residential & Commercial', 'color' => '#38bdf8'],
-                    ['name' => 'Smart Sockets & Regulators', 'share' => 26, 'desc' => 'Heavy Duty • Flame-Retardant Polycarbonate', 'color' => '#40bac7'],
-                    ['name' => 'MCBs & Industrial Distribution', 'share' => 12, 'desc' => 'Industrial Grade • Bulk Contractor Orders', 'color' => '#a855f7'],
+            // Remaining categories grouped into "Other Collections" for clean Donut
+            $remaining = $categories->slice(5);
+            $remainingCount = $remaining->sum('products_count');
+            if ($remainingCount > 0) {
+                $remPct = round(max(0, 100 - $topSum), 1);
+                $reachSeries[] = $remPct;
+                $reachLabels[] = 'Other Series (' . $remaining->count() . ' Categories)';
+                $chartColors[] = '#94a3b8';
+            }
+
+            // Detailed items list ordered by products count
+            $colorIdx = 0;
+            foreach ($categories as $cat) {
+                if ($cat->products_count === 0 && $categories->count() > 5) {
+                    continue;
+                }
+                $share = round(($cat->products_count / $totalProducts) * 100, 1);
+                $c = $palette[$colorIdx % count($palette)];
+                $reachItems[] = [
+                    'name'           => $cat->name,
+                    'share'          => $share,
+                    'products_count' => $cat->products_count,
+                    'desc'           => $cat->products_count . ' Registered Products (' . $share . '%)',
+                    'color'          => $c,
                 ];
+                $colorIdx++;
             }
         } else {
             $reachSeries = [62, 26, 12];
             $reachLabels = ['Modular Touch Switches', 'Smart Sockets & Regulators', 'MCBs & Industrial Distribution'];
+            $chartColors = ['#40bac7', '#38bdf8', '#a855f7'];
             $reachItems = [
-                ['name' => 'Modular Touch Switches', 'share' => 62, 'desc' => 'High Demand • Residential & Commercial', 'color' => '#38bdf8'],
-                ['name' => 'Smart Sockets & Regulators', 'share' => 26, 'desc' => 'Heavy Duty • Flame-Retardant Polycarbonate', 'color' => '#40bac7'],
+                ['name' => 'Modular Touch Switches', 'share' => 62, 'desc' => 'High Demand • Residential & Commercial', 'color' => '#40bac7'],
+                ['name' => 'Smart Sockets & Regulators', 'share' => 26, 'desc' => 'Heavy Duty • Flame-Retardant Polycarbonate', 'color' => '#38bdf8'],
                 ['name' => 'MCBs & Industrial Distribution', 'share' => 12, 'desc' => 'Industrial Grade • Bulk Contractor Orders', 'color' => '#a855f7'],
             ];
         }
@@ -145,9 +162,11 @@ class VoltivaMasterDashboardWidget extends Widget
                 ],
             ],
             'reach' => [
-                'series' => $reachSeries,
-                'labels' => $reachLabels,
-                'items'  => $reachItems,
+                'series'        => $reachSeries,
+                'labels'        => $reachLabels,
+                'chartColors'   => $chartColors,
+                'items'         => $reachItems,
+                'totalProducts' => (string) $totalProducts,
             ],
         ];
     }
