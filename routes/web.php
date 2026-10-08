@@ -211,9 +211,23 @@ Route::get('/sync-live-catalog', function () {
         return response('Error: Invalid JSON data.', 500);
     }
 
-    $cats = $data['categories'] ?? [];
-    $subcats = $data['sub_categories'] ?? [];
-    $prods = $data['products'] ?? [];
+    $cleanRow = function(array $row) {
+        foreach (['created_at', 'updated_at'] as $col) {
+            if (!empty($row[$col])) {
+                $ts = strtotime($row[$col]);
+                $row[$col] = $ts ? date('Y-m-d H:i:s', $ts) : date('Y-m-d H:i:s');
+            } else {
+                $row[$col] = date('Y-m-d H:i:s');
+            }
+        }
+        if (isset($row['robots_index'])) $row['robots_index'] = (int) $row['robots_index'];
+        if (isset($row['robots_follow'])) $row['robots_follow'] = (int) $row['robots_follow'];
+        return $row;
+    };
+
+    $cats = array_map($cleanRow, $data['categories'] ?? []);
+    $subcats = array_map($cleanRow, $data['sub_categories'] ?? []);
+    $prods = array_map($cleanRow, $data['products'] ?? []);
 
     \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
     \App\Models\Product::truncate();
