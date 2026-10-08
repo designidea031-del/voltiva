@@ -200,13 +200,31 @@ Route::get('/setup-hostinger', function () {
     return redirect()->route('fix-storage');
 });
 
-Route::get('/dev-login', function () {
-    $user = \App\Models\User::first();
-    if ($user) {
-        auth()->login($user);
-        request()->session()->regenerate();
+Route::get('/git-pull', function () {
+    $results = [];
+    $commands = [
+        'git fetch --all 2>&1',
+        'git reset --hard origin/main 2>&1',
+        'php artisan optimize:clear 2>&1',
+        'php artisan view:clear 2>&1',
+    ];
+
+    foreach ($commands as $cmd) {
+        $output = [];
+        $returnVar = null;
+        if (function_exists('exec')) {
+            @exec($cmd, $output, $returnVar);
+            $results[] = "$ {$cmd}\n" . implode("\n", $output);
+        } else {
+            $results[] = "$ {$cmd}\n[ERROR: exec() is disabled on this server]";
+        }
     }
-    return redirect('/admin');
-});
+
+    return response('<pre style="background:#0f172a;color:#38bdf8;padding:20px;border-radius:8px;font-family:monospace;">' . htmlspecialchars(implode("\n\n", $results)) . '</pre>');
+})->withoutMiddleware([
+    \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+]);
 
 
