@@ -684,14 +684,14 @@
               user-select: none;
             }
             .prime-script-text {
-              font-family: 'Dancing Script', 'Caveat', cursive;
-              font-size: clamp(20px, 3.8cqi, 56px);
-              font-weight: 700;
-              color: #405268;
+              font-family: 'Sacramento', cursive;
+              font-size: clamp(24px, 4.6cqi, 68px);
+              font-weight: 400;
+              color: #37475a;
               line-height: 1;
-              margin-bottom: -0.3cqi;
-              margin-right: 0.3cqi;
-              transform: rotate(-1.5deg);
+              margin-bottom: -0.35cqi;
+              margin-right: 0.2cqi;
+              transform: rotate(-1deg);
             }
             .prime-statement-title {
               display: flex;
@@ -755,7 +755,7 @@
                 font-size: clamp(18px, 5.4cqi, 30px);
               }
               .prime-script-text {
-                font-size: clamp(15px, 4.2cqi, 24px);
+                font-size: clamp(18px, 5.2cqi, 32px);
               }
             }
 
