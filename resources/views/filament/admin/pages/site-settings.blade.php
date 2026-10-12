@@ -1229,9 +1229,9 @@
                                             <span class="text-[10px] text-teal-600 font-bold">SVG</span>
                                         @endif
                                     @elseif($current_favicon)
-                                        <img src="{{ storage_asset($current_favicon) }}" alt="Favicon" class="sts-tab-favicon">
+                                        <img src="{{ site_favicon_url() }}" alt="Favicon" class="sts-tab-favicon">
                                     @else
-                                        <span class="w-3.5 h-3.5 rounded-full bg-teal-500 inline-block"></span>
+                                        <img src="{{ asset('assets/images/fav.png') }}" alt="Favicon" class="sts-tab-favicon">
                                     @endif
                                     <span>{{ $site_name ?: 'Voltiva' }} | Home</span>
                                     <span class="sts-tab-close">✕</span>
@@ -1253,6 +1253,25 @@
                                     <button type="button" wire:click="removeLogo('favicon')" class="sts-remove-link">Remove</button>
                                 @endif
                             </div>
+                        </div>
+
+                        <div class="mt-2.5 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                            @if($new_favicon)
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                                    New Favicon Selected — Click "Save Changes" below to apply everywhere
+                                </span>
+                            @elseif($current_favicon)
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    Active Custom Favicon: {{ basename($current_favicon) }}
+                                </span>
+                            @else
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300 font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                                    Using Default Voltiva Favicon (assets/images/fav.png)
+                                </span>
+                            @endif
                         </div>
                         @error('new_favicon')
                             <p class="text-xs text-red-500 font-semibold mt-1">{{ $message }}</p>

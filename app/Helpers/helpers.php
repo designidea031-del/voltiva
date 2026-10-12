@@ -50,13 +50,14 @@ if (!function_exists('setting')) {
      *
      * @param string $key
      * @param mixed $default
+     * @param bool $fresh
      * @return mixed
      */
-    function setting(string $key, mixed $default = null): mixed
+    function setting(string $key, mixed $default = null, bool $fresh = false): mixed
     {
         static $settings = null;
 
-        if ($settings === null) {
+        if ($settings === null || $fresh) {
             try {
                 if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
                     $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
@@ -68,11 +69,53 @@ if (!function_exists('setting')) {
             }
         }
 
+        if (empty($key)) {
+            return $settings;
+        }
+
         if (!array_key_exists($key, $settings) || $settings[$key] === null || $settings[$key] === '') {
             return $default;
         }
 
         return $settings[$key];
+    }
+}
+
+if (!function_exists('site_favicon_url')) {
+    /**
+     * Retrieve the fully qualified, cache-busting dynamic site favicon URL.
+     *
+     * @return string
+     */
+    function site_favicon_url(): string
+    {
+        $fav = setting('site_favicon');
+        $rawUrl = !empty($fav) ? storage_asset($fav) : asset('assets/images/fav.png');
+        $ver = substr(md5($rawUrl), 0, 8);
+        return $rawUrl . (str_contains($rawUrl, '?') ? '&v=' . $ver : '?v=' . $ver);
+    }
+}
+
+if (!function_exists('site_favicon_mime')) {
+    /**
+     * Retrieve the appropriate MIME type for the active site favicon.
+     *
+     * @return string
+     */
+    function site_favicon_mime(): string
+    {
+        $url = site_favicon_url();
+        $cleanPath = parse_url($url, PHP_URL_PATH) ?? '';
+        $ext = strtolower(pathinfo($cleanPath, PATHINFO_EXTENSION));
+
+        return match ($ext) {
+            'ico' => 'image/x-icon',
+            'svg' => 'image/svg+xml',
+            'png' => 'image/png',
+            'webp' => 'image/webp',
+            'jpg', 'jpeg' => 'image/jpeg',
+            default => 'image/png',
+        };
     }
 }
 

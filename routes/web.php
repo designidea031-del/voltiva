@@ -35,8 +35,45 @@ Route::get('/robots.txt', function () {
 })->name('seo.robots');
 
 // Dynamic SEO: sitemap.xml & sitemap.xsl
-Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('seo.sitemap');
-Route::get('/sitemap.xsl', [\App\Http\Controllers\SitemapController::class, 'xsl'])->name('seo.sitemap.xsl');
+// Dynamic Universal Favicon Route:
+// Ensures /favicon.ico direct browser requests dynamically serve the active branding favicon
+Route::get('/favicon.ico', function () {
+    $fav = setting('site_favicon');
+    if (!empty($fav)) {
+        $cleanPath = ltrim(str_replace('storage/', '', $fav), '/\\');
+        $fullPath = storage_path('app/public/' . $cleanPath);
+        if (!file_exists($fullPath)) {
+            $privatePath = storage_path('app/private/' . $cleanPath);
+            if (file_exists($privatePath)) {
+                $fullPath = $privatePath;
+            }
+        }
+        if (file_exists($fullPath) && !is_dir($fullPath)) {
+            $mime = match (strtolower(pathinfo($fullPath, PATHINFO_EXTENSION))) {
+                'ico' => 'image/x-icon',
+                'svg' => 'image/svg+xml',
+                'png' => 'image/png',
+                'webp' => 'image/webp',
+                'jpg', 'jpeg' => 'image/jpeg',
+                default => 'image/png',
+            };
+            return response()->file($fullPath, [
+                'Content-Type' => $mime,
+                'Cache-Control' => 'no-cache, must-revalidate',
+            ]);
+        }
+    }
+
+    $defaultFav = public_path('assets/images/fav.png');
+    if (file_exists($defaultFav)) {
+        return response()->file($defaultFav, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'no-cache, must-revalidate',
+        ]);
+    }
+
+    abort(404);
+})->name('seo.favicon');
 
 // Universal Storage File Fallback Route:
 // Serves uploaded files directly when public/storage symlink is missing, broken, or unsupported on live server.

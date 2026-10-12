@@ -10,13 +10,15 @@
   <!-- Site Title -->
   <title>Admin Login - {{ setting('site_name', 'Voltiva') }}</title>
   @php
-      $favicon = setting('site_favicon') ? storage_asset(setting('site_favicon')) : asset('assets/images/fav.png');
+      $favicon = site_favicon_url();
+      $faviconMime = site_favicon_mime();
       $logo = setting('site_logo') ? storage_asset(setting('site_logo')) : asset('assets/images/logos/logo.webp');
   @endphp
 
-
-  <!-- Place favicon.ico in the root directory -->
-  <link rel="shortcut icon" type="image/x-icon" href="{{ $favicon }}">
+  <!-- Dynamic Favicon -->
+  <link rel="shortcut icon" href="{{ $favicon }}">
+  <link rel="icon" type="{{ $faviconMime }}" href="{{ $favicon }}">
+  <link rel="apple-touch-icon" href="{{ $favicon }}">
 
   <!-- CSS here -->
   <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">

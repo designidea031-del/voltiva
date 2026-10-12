@@ -639,10 +639,10 @@
                 <div class="google-serp-box">
                     <div class="google-serp-header">
                         <div class="google-favicon">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="#4285F4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+                            <img src="{{ site_favicon_url() }}" alt="favicon" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;">
                         </div>
                         <div>
-                            <div class="google-site-name">Voltiva Electricals</div>
+                            <div class="google-site-name">{{ setting('site_name', 'Voltiva Electricals') }}</div>
                             <div class="google-site-url">{{ url($page->route_path ?: '/') }}</div>
                         </div>
                     </div>

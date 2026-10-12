@@ -209,7 +209,7 @@ class SiteSettings extends Page
                 'contact_email' => 'nullable|email',
                 'new_header_logo' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
                 'new_footer_logo' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
-                'new_favicon' => 'nullable|file|mimes:png,ico,svg,webp,jpeg,jpg|max:2048',
+                'new_favicon' => 'nullable|file|mimes:png,ico,svg,webp,jpeg,jpg,x-icon|max:2048',
                 'new_hero_video' => 'nullable|file|mimes:mp4,webm,ogg,mov,m4v|max:102400',
             ], [
                 'new_header_logo.mimes' => 'Header logo must be a PNG, SVG, WEBP, JPG, or GIF file.',
@@ -245,6 +245,12 @@ class SiteSettings extends Page
         }
 
         if ($this->new_favicon) {
+            // Remove previous custom favicon file if present
+            if (!empty($this->current_favicon) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->current_favicon)) {
+                try {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($this->current_favicon);
+                } catch (\Throwable $e) {}
+            }
             $path = $this->new_favicon->store('settings/favicons', 'public');
             $this->current_favicon = $path;
             $this->new_favicon = null;
@@ -306,7 +312,10 @@ class SiteSettings extends Page
         }
 
         try {
+            setting('', null, true);
+            \Illuminate\Support\Facades\Cache::flush();
             \Illuminate\Support\Facades\Artisan::call('view:clear');
+            \Illuminate\Support\Facades\Artisan::call('cache:clear');
         } catch (\Throwable $e) {}
 
         Notification::make()
@@ -327,13 +336,21 @@ class SiteSettings extends Page
             $this->current_footer_logo = null;
             Setting::updateOrCreate(['key' => 'site_logo_dark'], ['value' => null]);
         } elseif ($type === 'favicon') {
+            if (!empty($this->current_favicon) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->current_favicon)) {
+                try {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($this->current_favicon);
+                } catch (\Throwable $e) {}
+            }
             $this->new_favicon = null;
             $this->current_favicon = null;
             Setting::updateOrCreate(['key' => 'site_favicon'], ['value' => null]);
         }
 
         try {
+            setting('', null, true);
+            \Illuminate\Support\Facades\Cache::flush();
             \Illuminate\Support\Facades\Artisan::call('view:clear');
+            \Illuminate\Support\Facades\Artisan::call('cache:clear');
         } catch (\Throwable $e) {}
 
         Notification::make()

@@ -2,7 +2,7 @@
     $title = $this->data['meta_title'] ?? setting('meta_title', 'Voltiva - High Voltage Solutions & Electrical Manufacturing');
     $desc = $this->data['meta_description'] ?? setting('meta_description', 'Voltiva is a premier manufacturer and supplier of electrical accessories, switches, and high-voltage solutions engineered for efficiency and durability.');
     $url = $this->data['canonical_url'] ?? setting('canonical_url', config('app.url', 'https://voltiva.com'));
-    $favicon = setting('site_favicon') ? storage_asset(setting('site_favicon')) : asset('assets/images/fav.png');
+    $favicon = site_favicon_url();
 
     $titleLen = mb_strlen($title ?? '');
     $descLen = mb_strlen($desc ?? '');

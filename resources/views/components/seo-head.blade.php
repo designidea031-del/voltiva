@@ -78,7 +78,8 @@
     $canonicalUrl = $canonical ?: (setting('canonical_url') ? rtrim(setting('canonical_url'), '/') . request()->getRequestUri() : url()->current());
 
     // Favicon & Logo resolution
-    $favicon = setting('site_favicon') ? storage_asset(setting('site_favicon')) : asset('assets/images/fav.png');
+    $favicon = site_favicon_url();
+    $faviconMime = site_favicon_mime();
     $primaryLogo = setting('site_logo') ? storage_asset(setting('site_logo')) : asset('assets/images/logos/logo.webp');
 
     // OG Image resolution
@@ -161,10 +162,9 @@
 <meta name="robots" content="{{ $metaRobots }}">
 <link rel="canonical" href="{{ $canonicalUrl }}">
 
-<!-- Site Favicon -->
-<link rel="shortcut icon" type="image/x-icon" href="{{ $favicon }}">
-<link rel="icon" type="image/svg+xml" href="{{ $favicon }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon }}">
+<!-- Dynamic Site Favicon -->
+<link rel="shortcut icon" href="{{ $favicon }}">
+<link rel="icon" type="{{ $faviconMime }}" href="{{ $favicon }}">
 <link rel="apple-touch-icon" href="{{ $favicon }}">
 
 <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->

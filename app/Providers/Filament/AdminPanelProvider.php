@@ -41,21 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Voltiva Dash')
             ->brandLogo(fn () => new HtmlString(view('filament.admin.components.brand-logo')->render()))
             ->brandLogoHeight('2.5rem')
-            ->favicon(function () {
-                $user = filament()->auth()->user();
-                if (!empty($user?->avatar_url)) {
-                    return $user->avatar_url;
-                }
-                try {
-                    if (Schema::hasTable('settings')) {
-                        $fav = Setting::where('key', 'site_favicon')->value('value');
-                        if (!empty($fav)) {
-                            return asset('storage/' . ltrim($fav, '/'));
-                        }
-                    }
-                } catch (\Throwable $e) {}
-                return asset('assets/images/fav.png');
-            })
+            ->favicon(fn (): string => site_favicon_url())
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->profile(\App\Filament\Admin\Pages\EditProfile::class, isSimple: false)
@@ -87,7 +73,10 @@ class AdminPanelProvider extends PanelProvider
                             document.documentElement.classList.remove("dark");
                         } catch (e) {}
                     })();
-                </script>'
+                </script>
+                <link rel="shortcut icon" href="' . e(site_favicon_url()) . '" />
+                <link rel="icon" type="' . e(site_favicon_mime()) . '" href="' . e(site_favicon_url()) . '" />
+                <link rel="apple-touch-icon" href="' . e(site_favicon_url()) . '" />'
             )
             ->renderHook(
                 \Filament\View\PanelsRenderHook::HEAD_END,
