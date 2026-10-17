@@ -27,7 +27,7 @@ class ProductForm
                         ->components([
                             TextInput::make('title')
                                 ->label('Product Title')
-                                ->placeholder('e.g. ACCURA SWITCH & ACCESSORIES (ROCKER)')
+                                ->placeholder('e.g. 1 Way Switch')
                                 ->required()
                                 ->maxLength(255),
 
@@ -36,13 +36,13 @@ class ProductForm
                                     TextInput::make('code')
                                         ->label('Product Code / SKU')
                                         ->prefixIcon('heroicon-o-qr-code')
-                                        ->placeholder('e.g. 112232')
+                                        ->placeholder('e.g. 1001 or B-1031')
                                         ->maxLength(255),
 
                                     TextInput::make('size')
                                         ->label('Size / Specification')
                                         ->prefixIcon('heroicon-o-adjustments-horizontal')
-                                        ->placeholder('e.g. 12 / 1-Way / 16A')
+                                        ->placeholder('e.g. 1M')
                                         ->maxLength(255),
 
                                     Select::make('category_id')
@@ -74,7 +74,7 @@ class ProductForm
                                     TextInput::make('tags')
                                         ->label('Color / Finish')
                                         ->prefixIcon('heroicon-o-paint-brush')
-                                        ->placeholder('e.g. Pure White, Matt Black, Graphite Grey')
+                                        ->placeholder('e.g. Pure White (Rocker), Matt Black, Architectural Grey')
                                         ->maxLength(255),
                                 ]),
                         ]),
@@ -95,7 +95,7 @@ class ProductForm
                                         ->label('PKD (Packaging Quantity)')
                                         ->prefixIcon('heroicon-o-archive-box')
                                         ->numeric()
-                                        ->placeholder('e.g. 12')
+                                        ->placeholder('e.g. 20')
                                         ->helperText('Number of units per standard carton/packaging.'),
                                 ]),
                         ]),
@@ -108,7 +108,8 @@ class ProductForm
                             Textarea::make('description')
                                 ->label('Description')
                                 ->placeholder('Enter detailed product specifications, features, material grades, application notes...')
-                                ->rows(5),
+                                ->rows(6)
+                                ->helperText('Clean formatted specifications & notes. No HTML tags required.'),
                         ]),
                 ])
                 ->columnSpan(['default' => 1, 'lg' => 2]),

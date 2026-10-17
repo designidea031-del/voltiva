@@ -20,7 +20,7 @@ Route::get('/category/{id}', [PageController::class, 'categoryProducts'])->name(
 // Placeholder routes to prevent RouteNotFoundException for missing views
 Route::get('/service', [PageController::class, 'product'])->name('service');
 Route::get('/service-details', [PageController::class, 'product'])->name('service-details');
-Route::get('/shop-details/{id?}', [PageController::class, 'product'])->name('shop-details');
+Route::get('/shop-details/{id?}', [PageController::class, 'shopDetails'])->name('shop-details');
 Route::get('/team-details', [PageController::class, 'about'])->name('team-details');
 Route::get('/portfolio', [PageController::class, 'home'])->name('portfolio');
 Route::get('/portfolio-details', [PageController::class, 'home'])->name('portfolio-details');

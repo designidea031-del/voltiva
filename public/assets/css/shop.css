@@ -4395,7 +4395,7 @@ div.woocommerce .woocommerce-cart-form table.shop_table td:before {
 }
 
 .tj-product-area {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .tj-product-rating {
@@ -5980,7 +5980,7 @@ div.woocommerce .cart_totals table {
 }
 
 .tj-product-area {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .tj-product-details-thumb-wrapper .tj-product-action-btn a {

@@ -182,6 +182,39 @@ class PageController extends Controller
     public function categoryProducts($id)
     {
         $category = Category::with(['subCategories.products', 'products'])->findOrFail($id);
-        return view('category-products', compact('category'));
+
+        $categories = Category::withCount(['products'])->with(['subCategories' => function ($q) {
+            $q->withCount('products');
+        }])->get()->map(function ($cat) {
+            $subProductsCount = $cat->subCategories->sum('products_count');
+            $cat->total_products_count = max($cat->products_count, $subProductsCount);
+            if ($cat->total_products_count === 0) {
+                $cat->total_products_count = \App\Models\Product::where('category_id', $cat->id)
+                    ->orWhereIn('sub_category_id', $cat->subCategories->pluck('id'))
+                    ->count();
+            }
+            return $cat;
+        });
+
+        return view('category-products', compact('category', 'categories'));
+    }
+
+    public function shopDetails($id = null)
+    {
+        if ($id) {
+            $product = Product::find($id);
+            if ($product && $product->category_id) {
+                return redirect()->route('category.products', $product->category_id);
+            }
+            $category = Category::find($id);
+            if ($category) {
+                return redirect()->route('category.products', $category->id);
+            }
+        }
+        $firstCat = Category::first();
+        if ($firstCat) {
+            return redirect()->route('category.products', $firstCat->id);
+        }
+        return redirect()->route('product');
     }
 }
